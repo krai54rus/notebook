@@ -1,33 +1,14 @@
-<script setup lang="ts">
-  import { ref } from 'vue'
-
-  defineProps<{ msg: string }>()
-
-  const count = ref(0)
-</script>
-
 <template>
-  <div>
-    <h1>{{ msg }}</h1>
-
-    <button type="button" @click="count++">count is: {{ count }}</button>
-  </div>
+  <div class="content">Main</div>
 </template>
 
-<style scoped>
-  a {
-    color: #42b983;
-  }
+<style lang="scss" scoped>
+  $component: content;
 
-  label {
-    margin: 0 0.5em;
-    font-weight: bold;
-  }
-
-  code {
-    background-color: #eee;
-    padding: 2px 4px;
-    border-radius: 4px;
-    color: #304455;
+  .#{$component} {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-grow: 1;
   }
 </style>
