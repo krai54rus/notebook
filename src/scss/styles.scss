@@ -1,0 +1,40 @@
+// @import "sintaxHighlight";
+@import 'fonts';
+@import 'variables/common';
+@import 'variables/colorsLight';
+// @import "helpers/sizes";
+// @import "helpers/offsets";
+// @import "helpers/borders";
+// @import "transitions";
+// @import "typography";
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--color-black);
+  font-size: 14px;
+  font-family: var(--font-primary);
+  background: var(--color-gray-100);
+}
+
+a {
+  text-decoration: none;
+}
+
+#app {
+  height: 100%;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+}

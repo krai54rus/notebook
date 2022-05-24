@@ -11,14 +11,14 @@
 </template>
 
 <style lang="scss">
-  * {
-    box-sizing: border-box;
-  }
+  $component: root;
 
-  body {
-    margin: 0px;
+  .#{$component} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
-
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -26,9 +26,5 @@
     // text-align: center;
     // color: #2c3e50;
     // margin-top: 60px;
-  }
-
-  a {
-    text-decoration: none;
   }
 </style>
