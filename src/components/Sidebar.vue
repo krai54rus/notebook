@@ -1,28 +1,23 @@
 <script setup lang="ts">
   import { computed } from 'vue'
-  import mainSvg from '@/assests/icons/main.svg'
-  import notesSvg from '@/assests/icons/notes.svg'
-  import settingsSvg from '@/assests/icons/main.svg'
-  import todoSvg from '@/assests/icons/todo.svg'
-  import constructorSvg from '@/assests/icons/constructor.svg'
+  import mainSvg from '@/assets/icons/main.svg?raw'
+  import notesSvg from '@/assets/icons/notes.svg?raw'
+  import settingsSvg from '@/assets/icons/settings.svg?raw'
+  import todoSvg from '@/assets/icons/todo.svg?raw'
+  import constructorSvg from '@/assets/icons/constructor.svg?raw'
 
-  const iconFunc = (name): string => {
+  const iconFunc = (name: string): any => {
     switch (name) {
       case 'main':
-        return mainSvg
-        break
+        return mainSvg as string
       case 'notes':
-        return notesSvg
-        break
+        return notesSvg as string
       case 'todo':
-        return todoSvg
-        break
+        return todoSvg as string
       case 'constructor':
-        return constructorSvg
-        break
+        return constructorSvg as string
       case 'settings':
-        return settingsSvg
-        break
+        return settingsSvg as string
 
       default:
         break
@@ -72,10 +67,11 @@
     </div>
     <div class="menu-bottom menu__list">
       <div class="menu__item" v-for="(item, index) in fields" :key="index">
-        <router-link :to="item.path">
-          <img class="menu__item-img" :src="item.icon" />
-          <div v-html="mainSvg"></div>
-          <span>{{ item.title }}</span>
+        <router-link class="menu__item-link" :to="item.path">
+          <div class="menu__item-icon" v-html="iconFunc(item.icon)"></div>
+          <div class="menu__item-text">
+            <span>{{ item.title }}</span>
+          </div>
         </router-link>
       </div>
     </div>
@@ -105,14 +101,21 @@
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          padding: 4px 4px 4px 8px;
+          padding: 4px 4px 4px 18px;
 
-          &-img {
+          &-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--color-white);
+          }
+
+          &-icon {
             fill: var(--color-gray-40);
           }
 
-          a {
-            color: white;
+          &-icon > svg {
+            fill: var(--color-gray-40);
           }
         }
       }
