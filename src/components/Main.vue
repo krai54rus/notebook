@@ -1,9 +1,9 @@
 <template>
-  <div class="content">Main</div>
+  <div class="main">Main</div>
 </template>
 
 <style lang="scss" scoped>
-  $component: content;
+  $component: main;
 
   .#{$component} {
     width: 100%;
