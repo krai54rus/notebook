@@ -1,33 +1,26 @@
-<script setup lang="ts">
-  import { ref } from 'vue'
-
-  defineProps<{ msg: string }>()
-
-  const count = ref(0)
+<script lang="ts" setup>
+  import WidgetBlock from './main/WidgetBlock.vue'
 </script>
-
 <template>
-  <div>
-    <h1>{{ msg }}</h1>
-
-    <button type="button" @click="count++">count is: {{ count }}</button>
+  <div class="main">
+    <div class="main-wrapper">
+      <WidgetBlock title="ToDo"></WidgetBlock>
+    </div>
   </div>
 </template>
 
-<style scoped>
-  a {
-    color: #42b983;
-  }
+<style lang="scss" scoped>
+  $component: main;
 
-  label {
-    margin: 0 0.5em;
-    font-weight: bold;
-  }
+  .#{$component} {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-grow: 1;
 
-  code {
-    background-color: #eee;
-    padding: 2px 4px;
-    border-radius: 4px;
-    color: #304455;
+    &-wrapper {
+      width: 100%;
+      padding: 16px;
+    }
   }
 </style>
