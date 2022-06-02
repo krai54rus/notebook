@@ -25,6 +25,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    flex-shrink: 0;
     height: 258px;
     margin: 0 12px 0 0;
     width: 172px;

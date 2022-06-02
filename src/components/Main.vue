@@ -1,10 +1,16 @@
 <script lang="ts" setup>
   import WidgetBlock from './main/WidgetBlock.vue'
+  import { computed } from 'vue'
+  import { useStore } from 'vuex'
+
+  const store = useStore()
+  store.dispatch('module/loaditems')
+  const data = computed(() => store.state.module.items)
 </script>
 <template>
   <div class="main">
     <div class="main-wrapper">
-      <WidgetBlock title="ToDo"></WidgetBlock>
+      <WidgetBlock title="ToDo" :items="data"></WidgetBlock>
     </div>
   </div>
 </template>
