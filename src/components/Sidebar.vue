@@ -1,28 +1,25 @@
 <script setup lang="ts">
   import { computed } from 'vue'
-  import mainSvg from '@/assests/icons/main.svg'
-  import notesSvg from '@/assests/icons/notes.svg'
-  import settingsSvg from '@/assests/icons/main.svg'
-  import todoSvg from '@/assests/icons/todo.svg'
-  import constructorSvg from '@/assests/icons/constructor.svg'
+  import mainSvg from '@/assets/icons/main.svg?raw'
+  import notesSvg from '@/assets/icons/notes.svg?raw'
+  import settingsSvg from '@/assets/icons/settings.svg?raw'
+  import todoSvg from '@/assets/icons/todo.svg?raw'
+  import constructorSvg from '@/assets/icons/constructor.svg?raw'
+  import arrowDownSvg from '@/assets/icons/arrow_down.svg?raw'
+  import plusSvg from '@/assets/icons/plus.svg?raw'
 
-  const iconFunc = (name): string => {
+  const iconFunc = (name: string): any => {
     switch (name) {
       case 'main':
-        return mainSvg
-        break
+        return mainSvg as string
       case 'notes':
-        return notesSvg
-        break
+        return notesSvg as string
       case 'todo':
-        return todoSvg
-        break
+        return todoSvg as string
       case 'constructor':
-        return constructorSvg
-        break
+        return constructorSvg as string
       case 'settings':
-        return settingsSvg
-        break
+        return settingsSvg as string
 
       default:
         break
@@ -32,7 +29,7 @@
   const fields = [
     {
       title: 'Главная',
-      path: 'main',
+      path: '/',
       icon: 'main',
     },
     {
@@ -59,24 +56,44 @@
 </script>
 
 <template>
-  <div class="sidebar sidebar-menu">
-    <div class="menu__top">
-      <div class="menu__user">
-        <div class="menu__user-avatar">
-          <img src="avatar.png" />
+  <div class="sidebar">
+    <div class="menu">
+      <div class="menu__info">
+        <div class="menu__info_item menu__user">
+          <div class="menu__user-avatar">
+            <img src="../assets/avatar.png" />
+          </div>
+          <div class="menu__user-name">
+            <span>Евгений Быстрый</span>
+          </div>
         </div>
-        <div class="menu__user-name">
-          <span>Евгений Быстрый</span>
+        <div class="menu__info_item menu__create">
+          <div class="menu__create-button">
+            <div class="menu__create-left">
+              <div
+                class="menu__create-icon menu__create-plus"
+                v-html="plusSvg"
+              ></div>
+              <div>Создать</div>
+            </div>
+            <div class="menu__create-right">
+              <div
+                class="menu__create-icon menu__create-arrow"
+                v-html="arrowDownSvg"
+              ></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="menu-bottom menu__list">
-      <div class="menu__item" v-for="(item, index) in fields" :key="index">
-        <router-link :to="item.path">
-          <img class="menu__item-img" :src="item.icon" />
-          <div v-html="mainSvg"></div>
-          <span>{{ item.title }}</span>
-        </router-link>
+      <div class="menu-links menu__list">
+        <div class="menu__item" v-for="(item, index) in fields" :key="index">
+          <router-link class="menu__item-link" :to="item.path">
+            <div class="menu__item-icon" v-html="iconFunc(item.icon)"></div>
+            <div class="menu__item-text">
+              <span>{{ item.title }}</span>
+            </div>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -86,34 +103,95 @@
   $component: sidebar;
 
   .#{$component} {
-    &-menu {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-      width: 240px;
-      height: 100%;
-      flex-grow: 1;
-      background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 240px;
+    height: 100%;
+    flex-grow: 1;
+    background-color: #1a1a1a;
+    .menu {
+      width: 100%;
 
-      .menu {
-        &__list {
-          width: 100%;
+      &__user {
+        display: flex;
+        align-items: center;
+
+        &-avatar {
+          width: 28px;
+          height: 28px;
+          margin-right: 8px;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
 
-        &__item {
+        &-name {
+          color: var(--color-white);
+        }
+      }
+
+      &__info {
+        padding-left: 12px;
+        padding-right: 12px;
+        margin-bottom: 10px;
+
+        &_item {
+          margin-top: 10px;
+        }
+      }
+
+      &__create {
+        background-color: var(--evernote-green);
+        border-radius: 20px;
+        padding-left: 12px;
+        padding-right: 12px;
+
+        &-button {
           display: flex;
-          justify-content: flex-start;
+          justify-content: space-between;
           align-items: center;
-          padding: 4px 4px 4px 8px;
+        }
 
-          &-img {
-            fill: var(--color-gray-40);
-          }
+        &-left {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: var(--color-white);
+        }
 
-          a {
-            color: white;
-          }
+        &-icon {
+          fill: var(--color-white);
+        }
+      }
+
+      &__list {
+        width: 100%;
+      }
+
+      &__item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        &-link {
+          display: flex;
+          align-items: center;
+          padding: 4px 4px 4px 18px;
+          width: 100%;
+          color: var(--color-white);
+        }
+
+        &-icon {
+          fill: var(--color-gray-40);
+          stroke: var(--color-gray-40);
+        }
+
+        &:hover {
+          background-color: var(--gray25);
         }
       }
     }
