@@ -1,5 +1,12 @@
+<script lang="ts" setup>
+  import WidgetBlock from './main/WidgetBlock.vue'
+</script>
 <template>
-  <div class="main">Main</div>
+  <div class="main">
+    <div class="main-wrapper">
+      <WidgetBlock title="ToDo"></WidgetBlock>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -10,5 +17,10 @@
     height: 100%;
     display: flex;
     flex-grow: 1;
+
+    &-wrapper {
+      width: 100%;
+      padding: 16px;
+    }
   }
 </style>

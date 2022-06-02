@@ -29,7 +29,7 @@
   const fields = [
     {
       title: 'Главная',
-      path: 'main',
+      path: '/',
       icon: 'main',
     },
     {
@@ -59,7 +59,7 @@
   <div class="sidebar">
     <div class="menu">
       <div class="menu__info">
-        <div class="menu__user">
+        <div class="menu__info_item menu__user">
           <div class="menu__user-avatar">
             <img src="../assets/avatar.png" />
           </div>
@@ -67,7 +67,7 @@
             <span>Евгений Быстрый</span>
           </div>
         </div>
-        <div class="menu__create">
+        <div class="menu__info_item menu__create">
           <div class="menu__create-button">
             <div class="menu__create-left">
               <div
@@ -112,15 +112,16 @@
     flex-grow: 1;
     background-color: #1a1a1a;
     .menu {
+      width: 100%;
+
       &__user {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        margin-top: 10px;
 
         &-avatar {
           width: 28px;
           height: 28px;
+          margin-right: 8px;
 
           img {
             width: 100%;
@@ -136,6 +137,11 @@
       &__info {
         padding-left: 12px;
         padding-right: 12px;
+        margin-bottom: 10px;
+
+        &_item {
+          margin-top: 10px;
+        }
       }
 
       &__create {
@@ -170,18 +176,22 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        padding: 4px 4px 4px 18px;
 
         &-link {
           display: flex;
-          justify-content: center;
           align-items: center;
+          padding: 4px 4px 4px 18px;
+          width: 100%;
           color: var(--color-white);
         }
 
         &-icon {
           fill: var(--color-gray-40);
           stroke: var(--color-gray-40);
+        }
+
+        &:hover {
+          background-color: var(--gray25);
         }
       }
     }
