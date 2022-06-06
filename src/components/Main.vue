@@ -11,6 +11,7 @@
   <div class="main">
     <div class="main-wrapper">
       <WidgetBlock title="ToDo" :items="data"></WidgetBlock>
+      <WidgetBlock title="ToDo" :items="data"></WidgetBlock>
     </div>
   </div>
 </template>
@@ -23,8 +24,11 @@
     height: 100%;
     display: flex;
     flex-grow: 1;
+    overflow: hidden;
 
     &-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       width: 100%;
       padding: 16px;
     }

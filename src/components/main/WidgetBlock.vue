@@ -41,6 +41,7 @@
     -ms-flex-direction: column;
     flex-direction: column;
     padding: 16px;
+    overflow: hidden;
 
     &__title {
       margin-bottom: 10px;
@@ -61,7 +62,7 @@
       display: flex;
       width: 100%;
       max-width: 1624px;
-      overflow: hidden;
+      overflow-x: scroll;
       &__wrapper {
         width: 100%;
         display: flex;
