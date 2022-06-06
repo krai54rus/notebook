@@ -15,12 +15,14 @@
         <span>Tab1</span>
       </div>
     </div>
-    <div class="widget-container__list">
-      <WidgetItem v-for="(item, index) in items">
-        <template #item="item">
-          <slot name="item" :item="item"></slot>
-        </template>
-      </WidgetItem>
+    <div class="widget-container__list widget-list">
+      <div class="widget-list__wrapper">
+        <WidgetItem v-for="(item, index) in items">
+          <template #item="item">
+            <slot name="item" :item="item"></slot>
+          </template>
+        </WidgetItem>
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +41,7 @@
     -ms-flex-direction: column;
     flex-direction: column;
     padding: 16px;
+    overflow: hidden;
 
     &__title {
       margin-bottom: 10px;
@@ -53,6 +56,23 @@
         justify-content: flex-start;
         align-items: center;
       }
+    }
+
+    .widget-list {
+      display: flex;
+      width: 100%;
+      max-width: 1624px;
+      overflow-x: scroll;
+      &__wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: space-between;
+        padding: 4px;
+      }
+    }
+
+    &__list {
     }
   }
 </style>
