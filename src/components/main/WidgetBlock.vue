@@ -6,7 +6,7 @@
   }>()
 </script>
 <template>
-  <div :class="$style['widget-container']">
+  <div class="n-p-16" :class="$style['widget-container']">
     <div :class="$style['widget-container__title']">
       <h2>{{ title }}</h2>
     </div>
@@ -40,7 +40,7 @@
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
-    padding: 16px;
+    // padding: 16px;
     overflow: hidden;
 
     &__title {

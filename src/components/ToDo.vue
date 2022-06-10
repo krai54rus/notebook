@@ -9,10 +9,10 @@
   const data = computed(() => store.state.module.items)
 </script>
 <template>
-  <div :class="[$style['todo']">
-    <div :class="[$style['todo-wrapper']">
+  <div class="n-wp-100 n-hp-100" :class="$style['todo']">
+    <div class="n-wp-100 n-hp-100" :class="$style['todo-wrapper']">
       <Toolbar></Toolbar>
-      <div :class="[$style['todo__list']">
+      <div class="n-wp-100" :class="$style['todo__list']">
         <ToDoTable
           v-for="(item, index) in data"
           :key="index"
@@ -28,16 +28,7 @@
   $component: todo;
 
   .#{$component} {
-    width: 100%;
-    height: 100%;
-
-    &-wrapper {
-      width: 100%;
-      height: 100%;
-    }
-
     &__list {
-      width: 100%;
       max-width: 1040px;
       display: flex;
       flex-wrap: wrap;

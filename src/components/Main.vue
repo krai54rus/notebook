@@ -8,8 +8,8 @@
   const data = computed(() => store.state.module.items)
 </script>
 <template>
-  <div :class="$style['main']">
-    <div :class="$style['main-wrapper']">
+  <div class="n-flex n-wp-100 n-hp-100" :class="$style['main']">
+    <div class="n-wp-100 n-p-16" :class="$style['main-wrapper']">
       <WidgetBlock title="ToDo" :items="data"></WidgetBlock>
       <WidgetBlock title="ToDo" :items="data"></WidgetBlock>
     </div>
@@ -20,17 +20,12 @@
   $component: main;
 
   .#{$component} {
-    width: 100%;
-    height: 100%;
-    display: flex;
     flex-grow: 1;
     overflow: hidden;
 
     &-wrapper {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      width: 100%;
-      padding: 16px;
     }
   }
 </style>
