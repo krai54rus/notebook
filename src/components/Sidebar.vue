@@ -56,40 +56,50 @@
 </script>
 
 <template>
-  <div class="sidebar">
-    <div class="menu">
-      <div class="menu__info">
-        <div class="menu__info_item menu__user">
-          <div class="menu__user-avatar">
+  <div :class="$style['sidebar']">
+    <div :class="$style['menu']">
+      <div :class="$style['menu__info']">
+        <div :class="[$style['menu__info_item'], $style['menu__user']]">
+          <div :class="$style['menu__user-avatar']">
             <img src="../assets/avatar.png" />
           </div>
-          <div class="menu__user-name">
+          <div :class="$style['menu__user-name']">
             <span>Евгений Быстрый</span>
           </div>
         </div>
-        <div class="menu__info_item menu__create">
-          <div class="menu__create-button">
-            <div class="menu__create-left">
+        <div :class="[$style['menu__info_item'], $style['menu__create']]">
+          <div :class="$style['menu__create-button']">
+            <div :class="$style['menu__create-left']">
               <div
-                class="menu__create-icon menu__create-plus"
+                :class="[
+                  $style['menu__create-icon'],
+                  $style['menu__create-plus'],
+                ]"
                 v-html="plusSvg"
               ></div>
               <div>Создать</div>
             </div>
-            <div class="menu__create-right">
+            <div :class="$style['menu__create-right']">
               <div
-                class="menu__create-icon menu__create-arrow"
+                :class="[$style['menu__create-icon'], ['menu__create-arrow']]"
                 v-html="arrowDownSvg"
               ></div>
             </div>
           </div>
         </div>
       </div>
-      <div class="menu-links menu__list">
-        <div class="menu__item" v-for="(item, index) in fields" :key="index">
-          <router-link class="menu__item-link" :to="item.path">
-            <div class="menu__item-icon" v-html="iconFunc(item.icon)"></div>
-            <div class="menu__item-text">
+      <div :class="[$style['menu-links'], $style['menu__list']]">
+        <div
+          :class="$style['menu__item']"
+          v-for="(item, index) in fields"
+          :key="index"
+        >
+          <router-link :class="$style['menu__item-link']" :to="item.path">
+            <div
+              :class="$style['menu__item-icon']"
+              v-html="iconFunc(item.icon)"
+            ></div>
+            <div :class="$style['menu__item-text']">
               <span>{{ item.title }}</span>
             </div>
           </router-link>
@@ -99,7 +109,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
   $component: sidebar;
 
   .#{$component} {

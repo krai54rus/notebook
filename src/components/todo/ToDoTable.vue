@@ -1,12 +1,12 @@
 <template>
-  <div class="todo-table">
-    <div class="table__title">
+  <div :class="$style['todo-table']">
+    <div :class="$style['table__title']">
       <span>Заголовок таблицы</span>
     </div>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" module>
   $component: todo-table;
 
   .#{$component} {

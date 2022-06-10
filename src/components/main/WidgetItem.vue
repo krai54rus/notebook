@@ -1,12 +1,12 @@
 <script lang="ts" setup></script>
 <template>
-  <div class="widget-item">
+  <div :class="$style['widget-item']">
     <slot name="item">
-      <div class="widget-item__info">
-        <div class="widget-item__title">
+      <div :class="$style['widget-item__info']">
+        <div :class="$style['widget-item__title']">
           <span>Список дел</span>
         </div>
-        <div class="widget-item__content">
+        <div :class="$style['widget-item__content']">
           <span
             >Это стартовая заметка для задач. Здесь окажутся задачи, которые вы
             добавите через кнопку «Создать» и не поместите сразу в другую
@@ -18,7 +18,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
   $component: widget-item;
 
   .#{$component} {

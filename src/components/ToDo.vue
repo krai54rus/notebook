@@ -9,10 +9,10 @@
   const data = computed(() => store.state.module.items)
 </script>
 <template>
-  <div class="todo">
-    <div class="todo-wrapper">
+  <div :class="[$style['todo']">
+    <div :class="[$style['todo-wrapper']">
       <Toolbar></Toolbar>
-      <div class="todo__list">
+      <div :class="[$style['todo__list']">
         <ToDoTable
           v-for="(item, index) in data"
           :key="index"
@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
   $component: todo;
 
   .#{$component} {

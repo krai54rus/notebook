@@ -6,17 +6,17 @@
   }>()
 </script>
 <template>
-  <div class="widget-container">
-    <div class="widget-container__title">
+  <div :class="$style['widget-container']">
+    <div :class="$style['widget-container__title']">
       <h2>{{ title }}</h2>
     </div>
-    <div class="widget-container__tabs tabs-list">
-      <div class="tabs-item">
+    <div :class="[$style['widget-container__tabs'], $style['tabs-list']]">
+      <div :class="$style['tabs-item']">
         <span>Tab1</span>
       </div>
     </div>
-    <div class="widget-container__list widget-list">
-      <div class="widget-list__wrapper">
+    <div :class="[$style['widget-container__list'], $style['widget-list']]">
+      <div :class="$style['widget-list__wrapper']">
         <WidgetItem v-for="(item, index) in items">
           <template #item="item">
             <slot name="item" :item="item"></slot>
@@ -27,7 +27,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
   $component: widget-container;
 
   .#{$component} {

@@ -1,30 +1,30 @@
 <template>
-  <div class="toolbar">
-    <div class="toolbar__title">
+  <div :class="$style['toolbar']">
+    <div :class="$style['toolbar__title']">
       <slot name="caption">
         <h1>ToDo</h1>
       </slot>
     </div>
-    <div class="tabs">
-      <div class="tabs__list">
-        <div class="tabs__item">
+    <div :class="$style['tabs']">
+      <div :class="$style['tabs__list']">
+        <div :class="$style['tabs__item']">
           <span>Tab1</span>
         </div>
-        <div class="tabs__item">
-          <span>Tab2</span>
+        <div :class="$style['tabs__item']">
+          <span>Tab1</span>
         </div>
-        <div class="tabs__item">
-          <span>Tab3</span>
+        <div :class="$style['tabs__item']">
+          <span>Tab1</span>
         </div>
-        <div class="tabs__item">
-          <span>Tab4</span>
+        <div :class="$style['tabs__item']">
+          <span>Tab1</span>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" module>
   $component: toolbar;
 
   .#{$component} {

@@ -8,15 +8,15 @@
   const data = computed(() => store.state.module.items)
 </script>
 <template>
-  <div class="main">
-    <div class="main-wrapper">
+  <div :class="$style['main']">
+    <div :class="$style['main-wrapper']">
       <WidgetBlock title="ToDo" :items="data"></WidgetBlock>
       <WidgetBlock title="ToDo" :items="data"></WidgetBlock>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
   $component: main;
 
   .#{$component} {
