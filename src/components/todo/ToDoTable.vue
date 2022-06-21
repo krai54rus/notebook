@@ -1,5 +1,8 @@
 <template>
-  <div :class="$style['todo-table']">
+  <div
+    class="n-flex n-justify-center n-align-center"
+    :class="$style['todo-table']"
+  >
     <div :class="$style['table__title']">
       <span>Заголовок таблицы</span>
     </div>
@@ -10,9 +13,6 @@
   $component: todo-table;
 
   .#{$component} {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
     width: 200px;
     height: 100px;
     background-color: var(--color-blue-main);

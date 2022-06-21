@@ -9,19 +9,19 @@
 
 <template>
   <h1>About</h1>
-  <div class="data-list">
+  <div
+    class="n-flex n-justify-center n-align-center"
+    :class="$style['data-list']"
+  >
     <div class="data-item" v-for="item in data">
       <span>{{ item.id }}</span>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
   .data {
     &-list {
-      display: flex;
-      justify-content: center;
-      align-items: center;
       flex-wrap: wrap;
     }
   }
