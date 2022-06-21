@@ -1,26 +1,31 @@
 <script lang="ts" setup>
   import WidgetBlock from './main/WidgetBlock.vue'
+  import { computed } from 'vue'
+  import { useStore } from 'vuex'
+
+  const store = useStore()
+  store.dispatch('module/loaditems')
+  const data = computed(() => store.state.module.items)
 </script>
 <template>
-  <div class="main">
-    <div class="main-wrapper">
-      <WidgetBlock title="ToDo"></WidgetBlock>
+  <div class="n-flex n-wp-100 n-hp-100" :class="$style['main']">
+    <div class="n-wp-100 n-p-16" :class="$style['main-wrapper']">
+      <WidgetBlock title="ToDo" :items="data"></WidgetBlock>
+      <WidgetBlock title="ToDo" :items="data"></WidgetBlock>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
   $component: main;
 
   .#{$component} {
-    width: 100%;
-    height: 100%;
-    display: flex;
     flex-grow: 1;
+    overflow: hidden;
 
     &-wrapper {
-      width: 100%;
-      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
   }
 </style>

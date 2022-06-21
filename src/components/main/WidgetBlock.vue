@@ -6,26 +6,28 @@
   }>()
 </script>
 <template>
-  <div class="widget-container">
-    <div class="widget-container__title">
+  <div class="n-p-16" :class="$style['widget-container']">
+    <div :class="$style['widget-container__title']">
       <h2>{{ title }}</h2>
     </div>
-    <div class="widget-container__tabs tabs-list">
-      <div class="tabs-item">
+    <div :class="[$style['widget-container__tabs'], $style['tabs-list']]">
+      <div :class="$style['tabs-item']">
         <span>Tab1</span>
       </div>
     </div>
-    <div class="widget-container__list">
-      <WidgetItem v-for="(item, index) in items">
-        <template #item="item">
-          <slot name="item" :item="item"></slot>
-        </template>
-      </WidgetItem>
+    <div :class="[$style['widget-container__list'], $style['widget-list']]">
+      <div :class="$style['widget-list__wrapper']">
+        <WidgetItem v-for="(item, index) in items">
+          <template #item="item">
+            <slot name="item" :item="item"></slot>
+          </template>
+        </WidgetItem>
+      </div>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
   $component: widget-container;
 
   .#{$component} {
@@ -38,7 +40,8 @@
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
-    padding: 16px;
+    // padding: 16px;
+    overflow: hidden;
 
     &__title {
       margin-bottom: 10px;
@@ -53,6 +56,23 @@
         justify-content: flex-start;
         align-items: center;
       }
+    }
+
+    .widget-list {
+      display: flex;
+      width: 100%;
+      max-width: 1624px;
+      overflow-x: scroll;
+      &__wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: space-between;
+        padding: 4px;
+      }
+    }
+
+    &__list {
     }
   }
 </style>
