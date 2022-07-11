@@ -50,8 +50,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: var(--color-white);
     height: v-bind(toolbarHeight);
-    background-color: #ebecef;
     padding: 16px;
   }
 </style>
