@@ -1,16 +1,23 @@
+<script setup lang="ts">
+  defineProps<{
+    item?: any
+  }>()
+</script>
+
 <template>
-  <div
+  <router-link
     class="n-flex n-justify-center n-align-center"
-    :class="$style['todo-table']"
+    :class="$style['todo-table-item']"
+    :to="`/todo/table/${item.id}`"
   >
-    <div :class="$style['table__title']">
-      <span>Заголовок таблицы</span>
+    <div :class="$style['table-item__title']">
+      <span>{{ item.name }}</span>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <style lang="scss" module>
-  $component: todo-table;
+  $component: todo-table-item;
 
   .#{$component} {
     width: 200px;
@@ -19,7 +26,7 @@
     padding: 10px;
     border-radius: 3px;
 
-    .table {
+    .table-item {
       &__title {
         color: var(--color-white);
         font-size: 16px;

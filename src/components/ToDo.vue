@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import ToDoTable from './todo/ToDoTable.vue'
+  import ToDoTableItem from './todo/ToDoTableItem.vue'
   import Toolbar from '@/components/generic/Toolbar.vue'
   import { computed } from 'vue'
   import { useStore } from 'vuex'
@@ -11,9 +11,9 @@
 <template>
   <div class="n-wp-100 n-hp-100" :class="$style['todo']">
     <div class="n-wp-100 n-hp-100" :class="$style['todo-wrapper']">
-      <Toolbar></Toolbar>
+      <Toolbar title="ToDo"></Toolbar>
       <div class="n-wp-100" :class="$style['todo__list']">
-        <ToDoTable
+        <ToDoTableItem
           v-for="(item, index) in data"
           :key="index"
           title="ToDo"
