@@ -39,8 +39,7 @@
             <nb-button
               text="Добавить карточку"
               size="small"
-              plain
-              color="black"
+              color="green"
               @click="addCard()"
             >
               <template #before-text>

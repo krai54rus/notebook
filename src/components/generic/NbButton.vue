@@ -37,7 +37,7 @@
     :class="{
       [$style['button']]: true,
       [$style[`button_${size}`]]: true,
-      [$style[`button_color_${color}`]]: true,
+      [$style[`button_color ${color}`]]: true,
       [$style['button_outline']]: outline,
       [$style['button_plain']]: plain,
       [$style['button_depressed']]: depressed,
@@ -58,7 +58,48 @@
 </template>
 
 <style lang="scss" module>
+  @import '@/scss/variables/colorsVars';
   $component: button;
+
+  @mixin color($color, $color-text: 0) {
+    // color: $color;
+    // background: lighten($color, 25%);
+    color: $color-btn-white;
+    fill: $color-btn-white;
+    // @if $color-text != 0 {
+    color: $color;
+    fill: $color;
+    // }
+    background: $color;
+    border-color: $color;
+  }
+
+  @mixin hover($color, $color-text: 0) {
+    &:not(.#{$component}_disabled):hover {
+      $hovered-color: darken($color, 15%);
+      @if $color-text != 0 {
+        color: $color-text;
+        fill: $color-text;
+      }
+      background: $hovered-color;
+      border-color: $hovered-color;
+    }
+  }
+
+  // @mixin order($args...) {
+  //   // @for $i from 0 to length($selectors) {
+  //   // #{nth($selectors, $i + 1)} {
+  //   //   position: absolute;
+  //   //   height: $height;
+  //   //   margin-top: $i * $height;
+  //   // }
+  //   @each $color in $args {
+  //     . {
+  //       color: $color;
+  //     }
+  //   }
+  //   // }
+  // }
 
   .#{$component} {
     border-style: solid;
@@ -71,6 +112,7 @@
     padding: 0px 12px;
     font-weight: var(--font-weight-semibold);
     font-size: var(--size-16);
+    transition: 0.5s;
 
     &::-moz-focus-inner {
       border: 0;
@@ -92,55 +134,56 @@
     }
 
     &_color {
-      &_white {
-        color: var(--color-btn-white);
-        fill: var(--color-btn-white);
-        stroke: var(--color-btn-white);
-        background-color: var(--color-text-black);
-        border: 1px solid transparent;
+      $colors: 'white', 'black', 'green', 'blue', 'gray';
+      @each $color in $colors {
+        .#{$color} {
+          color: $color;
+        }
       }
-      &_black {
-        color: var(--color-text-black);
-        fill: var(--color-text-black);
-        stroke: var(--color-text-black);
-        background-color: var(--color-btn-white);
-        border-color: transparent;
-      }
-      &_red {
-        color: var(--color-btn-red);
-        background-color: var(--color-btn-bgc-red);
-        border: var(--color-btn-red);
-      }
-      &_yellow {
-        color: var(--color-btn-yellow);
-        background-color: var(--color-btn-yellow);
-        border: var(--color-btn-red);
-      }
-      &_orange {
-        color: var(--color-btn-orange);
-        background-color: var(--color-btn-orange);
-        border: var(--color-btn-orange);
-      }
-      &_blue {
-        color: var(--color-btn-blue);
-        background-color: var(--color-btn-blue);
-        border: var(--color-btn-blue);
-      }
-      &_purple {
-        color: var(--color-btn-purple);
-        background-color: var(--color-btn-purple);
-        border: solid var(--color-btn-purple);
-      }
-      &_gray {
-        color: var(--color-btn-gray);
-        background-color: var(--color-btn-gray);
-        border: solid var(--color-btn-gray);
-      }
+      // @include order('white', 'black', 'green', 'blue', 'gray');
+      // &_white {
+      //   @include color($color-btn-white);
+      //   @include hover($color-btn-white);
+      //   // background-color: var(--color-text-black);
+      // }
+      // &_black {
+      //   @include color($color-btn-black, $color-btn-black);
+      //   @include hover($color-btn-black, $color-btn-white);
+      //   // background-color: var(--color-btn-white);
+      // }
+      // &_red {
+      //   @include color($color-btn-red);
+      //   @include hover($color-btn-red);
+      // }
+      // &_green {
+      //   @include color($color-btn-green);
+      //   @include hover($color-btn-green);
+      // }
+      // &_yellow {
+      //   @include color($color-btn-yellow);
+      //   @include hover($color-btn-yellow);
+      // }
+      // &_orange {
+      //   @include color($color-btn-orange);
+      //   @include hover($color-btn-orange);
+      // }
+      // &_blue {
+      //   @include color($color-btn-blue);
+      //   @include hover($color-btn-blue);
+      // }
+      // &_purple {
+      //   @include color($color-btn-purple);
+      //   @include hover($color-btn-purple);
+      // }
+      // &_gray {
+      //   @include color($color-btn-gray, $color-btn-gray);
+      //   @include hover($color-btn-gray--light);
+      // }
     }
 
     &_plain {
       background-color: transparent;
-      border-color: none;
+      border-color: transparent;
     }
 
     &_outline {
