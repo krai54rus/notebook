@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import Toolbar from '@/components/generic/Toolbar.vue'
-  import Button from '@/components/generic/Button.vue'
+  import plusSvg from '@/assets/icons/plus.svg?raw'
 
   const addCard = () => {
     console.log('addCard')
@@ -35,12 +35,18 @@
           </div>
         </div>
         <div class="n-mt-8" :class="$style['table-column__footer']">
-          <div>
-            <Button
+          <div :class="$style['table-column__add-button']">
+            <nb-button
               text="Добавить карточку"
               size="small"
+              plain
+              color="black"
               @click="addCard()"
-            ></Button>
+            >
+              <template #before-text>
+                <div v-html="plusSvg" />
+              </template>
+            </nb-button>
           </div>
         </div>
       </div>
@@ -72,6 +78,11 @@
         }
         &__item {
           background-color: var(--color-white);
+        }
+        &__plus {
+          &:before {
+            content: '\e901';
+          }
         }
       }
     }
