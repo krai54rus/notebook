@@ -37,7 +37,7 @@
     :class="{
       [$style['button']]: true,
       [$style[`button_${size}`]]: true,
-      [$style[`button_color ${color}`]]: true,
+      [$style[`color-${color}`]]: true,
       [$style['button_outline']]: outline,
       [$style['button_plain']]: plain,
       [$style['button_depressed']]: depressed,
@@ -100,6 +100,12 @@
   //   }
   //   // }
   // }
+  $colors: 'white', 'black', 'green', 'blue', 'gray';
+  @each $color in $colors {
+    .color-#{$color} {
+      color: $color;
+    }
+  }
 
   .#{$component} {
     border-style: solid;
@@ -133,53 +139,53 @@
       font-size: var(--size-16);
     }
 
-    &_color {
-      $colors: 'white', 'black', 'green', 'blue', 'gray';
-      @each $color in $colors {
-        .#{$color} {
-          color: $color;
-        }
+    // &_color {
+    $colors: 'white', 'black', 'green', 'blue', 'gray';
+    @each $color in $colors {
+      .color-#{$color} {
+        color: $color;
       }
-      // @include order('white', 'black', 'green', 'blue', 'gray');
-      // &_white {
-      //   @include color($color-btn-white);
-      //   @include hover($color-btn-white);
-      //   // background-color: var(--color-text-black);
-      // }
-      // &_black {
-      //   @include color($color-btn-black, $color-btn-black);
-      //   @include hover($color-btn-black, $color-btn-white);
-      //   // background-color: var(--color-btn-white);
-      // }
-      // &_red {
-      //   @include color($color-btn-red);
-      //   @include hover($color-btn-red);
-      // }
-      // &_green {
-      //   @include color($color-btn-green);
-      //   @include hover($color-btn-green);
-      // }
-      // &_yellow {
-      //   @include color($color-btn-yellow);
-      //   @include hover($color-btn-yellow);
-      // }
-      // &_orange {
-      //   @include color($color-btn-orange);
-      //   @include hover($color-btn-orange);
-      // }
-      // &_blue {
-      //   @include color($color-btn-blue);
-      //   @include hover($color-btn-blue);
-      // }
-      // &_purple {
-      //   @include color($color-btn-purple);
-      //   @include hover($color-btn-purple);
-      // }
-      // &_gray {
-      //   @include color($color-btn-gray, $color-btn-gray);
-      //   @include hover($color-btn-gray--light);
-      // }
     }
+    // @include order('white', 'black', 'green', 'blue', 'gray');
+    // &_white {
+    //   @include color($color-btn-white);
+    //   @include hover($color-btn-white);
+    //   // background-color: var(--color-text-black);
+    // }
+    // &_black {
+    //   @include color($color-btn-black, $color-btn-black);
+    //   @include hover($color-btn-black, $color-btn-white);
+    //   // background-color: var(--color-btn-white);
+    // }
+    // &_red {
+    //   @include color($color-btn-red);
+    //   @include hover($color-btn-red);
+    // }
+    // &_green {
+    //   @include color($color-btn-green);
+    //   @include hover($color-btn-green);
+    // }
+    // &_yellow {
+    //   @include color($color-btn-yellow);
+    //   @include hover($color-btn-yellow);
+    // }
+    // &_orange {
+    //   @include color($color-btn-orange);
+    //   @include hover($color-btn-orange);
+    // }
+    // &_blue {
+    //   @include color($color-btn-blue);
+    //   @include hover($color-btn-blue);
+    // }
+    // &_purple {
+    //   @include color($color-btn-purple);
+    //   @include hover($color-btn-purple);
+    // }
+    // &_gray {
+    //   @include color($color-btn-gray, $color-btn-gray);
+    //   @include hover($color-btn-gray--light);
+    // }
+    // }
 
     &_plain {
       background-color: transparent;
