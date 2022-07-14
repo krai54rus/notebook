@@ -12,7 +12,10 @@
   <div class="n-wp-100 n-hp-100" :class="$style['todo']">
     <div class="n-wp-100 n-hp-100" :class="$style['todo-wrapper']">
       <Toolbar title="ToDo"></Toolbar>
-      <div class="n-wp-100" :class="$style['todo__list']">
+      <div
+        class="n-wp-100 n-py-16 n-flex n-justify-center n-alignt-center"
+        :class="$style['todo__list']"
+      >
         <ToDoTableItem
           v-for="(item, index) in data"
           :key="index"
@@ -30,10 +33,7 @@
   .#{$component} {
     &__list {
       max-width: 1040px;
-      display: flex;
       flex-wrap: wrap;
-      justify-content: flex-start;
-      align-items: center;
       flex-grow: 1;
       gap: 10px;
       margin: auto;
