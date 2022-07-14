@@ -35,9 +35,10 @@
   <div
     class="n-flex n-justify-center n-align-center"
     :class="{
+      [$style['green']]: true,
       [$style['button']]: true,
       [$style[`button_${size}`]]: true,
-      [$style[`color-${color}`]]: true,
+      [$style[`button_color-${color}`]]: true,
       [$style['button_outline']]: outline,
       [$style['button_plain']]: plain,
       [$style['button_depressed']]: depressed,
@@ -62,50 +63,66 @@
   $component: button;
 
   @mixin color($color, $color-text: 0) {
-    // color: $color;
-    // background: lighten($color, 25%);
-    color: $color-btn-white;
-    fill: $color-btn-white;
-    // @if $color-text != 0 {
-    color: $color;
-    fill: $color;
-    // }
-    background: $color;
-    border-color: $color;
+    &:not(.#{$component}_disabled, .#{$component}_outline, .#{$component}_plain) {
+      color: $color-btn-white;
+      fill: $color-btn-white;
+      @if $color-text != 0 {
+        color: $color;
+        fill: $color;
+      }
+      background: $color;
+      border-color: $color;
+    }
+
+    &.#{$component}_outline {
+      color: $color;
+      fill: $color;
+      background: transparent;
+      border-color: $color;
+    }
+
+    &.#{$component}_plain {
+      color: $color;
+      fill: $color;
+      background: transparent;
+      border-color: transparent;
+    }
   }
 
   @mixin hover($color, $color-text: 0) {
-    &:not(.#{$component}_disabled):hover {
-      $hovered-color: darken($color, 15%);
+    $hovered-color-darken: darken($color, 10%);
+    $hovered-color-lighten: lighten($color, 25%);
+    &:not(.#{$component}_disabled, .#{$component}_outline, .#{$component}_plain):hover {
       @if $color-text != 0 {
         color: $color-text;
         fill: $color-text;
       }
-      background: $hovered-color;
-      border-color: $hovered-color;
+      background: $hovered-color-darken;
+      border-color: $hovered-color-darken;
+    }
+
+    &.#{$component}_outline:hover {
+      background: $hovered-color-lighten;
+      border-color: $hovered-color-lighten;
+    }
+
+    &.#{$component}_plain:hover {
+      background: $hovered-color-lighten;
+      border-color: $hovered-color-lighten;
     }
   }
 
-  // @mixin order($args...) {
-  //   // @for $i from 0 to length($selectors) {
-  //   // #{nth($selectors, $i + 1)} {
-  //   //   position: absolute;
-  //   //   height: $height;
-  //   //   margin-top: $i * $height;
-  //   // }
-  //   @each $color in $args {
-  //     . {
-  //       color: $color;
-  //     }
-  //   }
-  //   // }
-  // }
-  $colors: 'white', 'black', 'green', 'blue', 'gray';
-  @each $color in $colors {
-    .color-#{$color} {
-      color: $color;
-    }
-  }
+  $colors: (
+    'white': $color-btn-white,
+    'black': $color-btn-black,
+    'green': $color-btn-green,
+    'red': $color-btn-red,
+    'blue': $color-btn-blue,
+    'yellow': $color-btn-yellow,
+    'orange': $color-btn-orange,
+    'purple': $color-btn-purple,
+    'gray': $color-btn-gray,
+  );
 
   .#{$component} {
     border-style: solid;
@@ -117,7 +134,6 @@
     height: 40px;
     padding: 0px 12px;
     font-weight: var(--font-weight-semibold);
-    font-size: var(--size-16);
     transition: 0.5s;
 
     &::-moz-focus-inner {
@@ -127,7 +143,6 @@
     &_small {
       height: 28px;
       padding: 0px 8px;
-      font-weight: var(--font-weight-semibold);
       font-size: var(--size-14);
     }
 
@@ -135,57 +150,16 @@
       min-width: 40px;
       height: 40px;
       padding: 0px 12px;
-      font-weight: var(--font-weight-semibold);
       font-size: var(--size-16);
     }
 
-    // &_color {
-    $colors: 'white', 'black', 'green', 'blue', 'gray';
-    @each $color in $colors {
-      .color-#{$color} {
-        color: $color;
+    // !-- Colors part --!
+    @each $name, $color in $colors {
+      &_color-#{$name} {
+        @include color($color);
+        @include hover($color);
       }
     }
-    // @include order('white', 'black', 'green', 'blue', 'gray');
-    // &_white {
-    //   @include color($color-btn-white);
-    //   @include hover($color-btn-white);
-    //   // background-color: var(--color-text-black);
-    // }
-    // &_black {
-    //   @include color($color-btn-black, $color-btn-black);
-    //   @include hover($color-btn-black, $color-btn-white);
-    //   // background-color: var(--color-btn-white);
-    // }
-    // &_red {
-    //   @include color($color-btn-red);
-    //   @include hover($color-btn-red);
-    // }
-    // &_green {
-    //   @include color($color-btn-green);
-    //   @include hover($color-btn-green);
-    // }
-    // &_yellow {
-    //   @include color($color-btn-yellow);
-    //   @include hover($color-btn-yellow);
-    // }
-    // &_orange {
-    //   @include color($color-btn-orange);
-    //   @include hover($color-btn-orange);
-    // }
-    // &_blue {
-    //   @include color($color-btn-blue);
-    //   @include hover($color-btn-blue);
-    // }
-    // &_purple {
-    //   @include color($color-btn-purple);
-    //   @include hover($color-btn-purple);
-    // }
-    // &_gray {
-    //   @include color($color-btn-gray, $color-btn-gray);
-    //   @include hover($color-btn-gray--light);
-    // }
-    // }
 
     &_plain {
       background-color: transparent;
