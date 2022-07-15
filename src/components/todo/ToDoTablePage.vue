@@ -1,18 +1,22 @@
 <script lang="ts" setup>
+  import { useToDoStore } from '@/pinia/todo'
+  import { computed } from 'vue'
   import ToDoTableColumn from './ToDoTableColumn.vue'
   import plusSvg from '@/assets/icons/plus.svg?raw'
 
-  const addCard = () => {
-    console.log('addCard')
-  }
+  const store = useToDoStore()
+  const items = computed(() => store.columns)
+  store.loadColumns()
 </script>
 
 <template>
   <div :class="$style['todo-table__wrapper']">
     <nb-toolbar title="ToDo Page"></nb-toolbar>
-    <div class="n-pl-16 n-pt-16" :class="$style['todo-table__content']">
-      <ToDoTableColumn></ToDoTableColumn>
-      <ToDoTableColumn></ToDoTableColumn>
+    <div
+      class="n-pl-16 n-pt-16 n-flex n-justify-start n-align-top n-wp-100 n-hp-100"
+      :class="$style['todo-table__content']"
+    >
+      <ToDoTableColumn v-for="item in items" :key="item.id" :column="item" />
     </div>
     <div :class="$style['todo-table__sidebar']"></div>
   </div>
@@ -41,11 +45,6 @@
         }
         &__item {
           background-color: var(--color-white);
-        }
-        &__plus {
-          &:before {
-            content: '\e901';
-          }
         }
       }
     }

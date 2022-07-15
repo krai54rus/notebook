@@ -1,24 +1,11 @@
 import { defineStore } from 'pinia'
 import api, { errorHandler } from '@/api'
 
-interface IToDoItem {
-  id: string
-  title: string
-  description?: string
-}
-
-interface IColumn {
-  id: string
-  title: string
-  items: IToDoItem[]
-  dateCreate: Date
-}
-
 export type RootState = {
-  columns: IColumn[]
+  columns: IToDoColumn[]
 }
 
-export const useTestStore = defineStore('toDo', {
+export const useToDoStore = defineStore('toDo', {
   state: () =>
     ({
       columns: [],
@@ -27,9 +14,7 @@ export const useTestStore = defineStore('toDo', {
   actions: {
     async loadColumns() {
       try {
-        const result: any = await api('../testapi/todo.json', 'GET')
-
-        console.log('columns ', result)
+        const result: any = await api('/testapi/todo.json', 'GET')
 
         this.columns = result
       } catch (e: any) {
