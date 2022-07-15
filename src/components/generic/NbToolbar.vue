@@ -1,8 +1,8 @@
 <script lang="ts" setup>
   import { ref } from 'vue'
   interface Props {
-    title: string
-    height: string
+    title?: string
+    height?: string
     items?: any[]
   }
 

@@ -1,12 +1,7 @@
-// @import "sintaxHighlight";
 @import 'fonts';
 @import 'variables/common';
-@import 'variables/colorsLight';
-// @import "helpers/sizes";
-// @import "helpers/offsets";
-// @import "helpers/borders";
-// @import "transitions";
-// @import "typography";
+@import 'variables/colorsVars';
+@import 'variables/colorsMain';
 * {
   box-sizing: border-box;
   margin: 0;

@@ -4,6 +4,7 @@
 
 :root {
   --color-white: #fff;
+  --color-white-hovered: #f4f5f7;
   --color-white-rgb: #{hextorgb(#fff)};
   --color-black: #2c323a;
   --color-black-rgb: #{hextorgb(#2c323a)};
@@ -141,6 +142,8 @@
   --color-cyan-80: #e3fcff;
   // blue
   --color-blue-main: #0067a3;
+  // --color-blue-main-hovered: opacity;
+  // --color-blue-main-hovered: #0067a3c5;
   --color-blue-30: #044b73;
   --color-blue-40: #0686cf;
   --color-blue-50: #08a6ff;
@@ -183,7 +186,22 @@
   --color-amaranth-80: #ffe8ec;
 
   // elements
-  --color-text-black: #172b4d;
+  --color-text-black: $color-text-black;
+  --color-btn-white: $color-text-white;
+  --color-btn-red: $color-text-red;
+  --color-btn-bgc-red: $color-text-red;
+  --color-btn-green: $color-text-green;
+  --color-btn-yellow: $color-text-yellow;
+  --color-btn-orange: $color-text-orange;
+  --color-btn-blue: $color-text-blue;
+  --color-btn-purple: $color-text-purple;
+  --color-btn-gray: $color-text-gray;
+
+  --dynamic-background-color: hsl(206, 13.7%, 10%);
+  --dynamic-icon-color: #ffffff;
+  --dynamic-text-color: #ffffff;
+  --dynamic-text-color-transparent: hsla(0, 0%, 100%, 0.16);
+  --dynamic-background-color-transparent: hsla(206, 13.7%, 10%, 0.9);
 
   --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }

@@ -1,49 +1,22 @@
 <script lang="ts" setup>
-  import Toolbar from '@/components/generic/Toolbar.vue'
-  import Button from '@/components/generic/Button.vue'
+  import { useToDoStore } from '@/pinia/todo'
+  import { computed } from 'vue'
+  import ToDoTableColumn from './ToDoTableColumn.vue'
+  import plusSvg from '@/assets/icons/plus.svg?raw'
 
-  const addCard = () => {
-    console.log('addCard')
-  }
+  const store = useToDoStore()
+  const items = computed(() => store.columns)
+  store.loadColumns()
 </script>
 
 <template>
   <div :class="$style['todo-table__wrapper']">
-    <Toolbar title="ToDo Page"></Toolbar>
-    <div class="n-pl-16 n-pt-16" :class="$style['todo-table__content']">
-      <div class="n-p-8 n-radius--full-sm" :class="$style['table-column']">
-        <div
-          class="n-mb-8 n-flex n-justify-space-between"
-          :class="$style['table-column__head']"
-        >
-          <div :class="$style['table-column__title']">
-            <span>Column one</span>
-          </div>
-          <div>...</div>
-        </div>
-        <div :class="$style['table-column__content']">
-          <div
-            class="n-flex n-flex-column"
-            :class="$style['table-column__list']"
-          >
-            <div
-              class="n-flex n-justify-start n-p-4 n-radius--full-sm"
-              :class="$style['table-column__item']"
-            >
-              Название элемента 1
-            </div>
-          </div>
-        </div>
-        <div class="n-mt-8" :class="$style['table-column__footer']">
-          <div>
-            <Button
-              text="Добавить карточку"
-              size="small"
-              @click="addCard()"
-            ></Button>
-          </div>
-        </div>
-      </div>
+    <nb-toolbar title="ToDo Page"></nb-toolbar>
+    <div
+      class="n-pl-16 n-pt-16 n-flex n-justify-start n-align-top n-wp-100 n-hp-100"
+      :class="$style['todo-table__content']"
+    >
+      <ToDoTableColumn v-for="item in items" :key="item.id" :column="item" />
     </div>
     <div :class="$style['todo-table__sidebar']"></div>
   </div>
