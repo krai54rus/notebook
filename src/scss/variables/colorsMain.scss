@@ -196,5 +196,11 @@
   --color-btn-purple: $color-text-purple;
   --color-btn-gray: $color-text-gray;
 
+  --dynamic-background-color: hsl(206, 13.7%, 10%);
+  --dynamic-icon-color: #ffffff;
+  --dynamic-text-color: #ffffff;
+  --dynamic-text-color-transparent: hsla(0, 0%, 100%, 0.16);
+  --dynamic-background-color-transparent: hsla(206, 13.7%, 10%, 0.9);
+
   --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
