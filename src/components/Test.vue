@@ -18,6 +18,8 @@
   const itemRefs = ref([])
   const currentTodo = ref({})
   const coords = ref({ x: 0, y: 0 })
+  // const startC = ref({ x: 0, y: 0 })
+  const indent = ref({ x: 0, y: 0 })
   let dragging = ref(false)
   let mouseMove = ref(false)
 
@@ -28,20 +30,17 @@
   })
 
   const dragStart = (e, { item, index }) => {
+    e.preventDefault()
     const elem = itemRefs.value[index]
     if (elem) {
+      dragging.value = true
       currentTodo.value = elem
+      const coordsElem = elem.getBoundingClientRect()
+      coords.value.x = e.clientX
+      coords.value.y = e.clientY
+      indent.value.x = e.clientX - coordsElem.left
+      indent.value.y = e.clientY - coordsElem.top
     }
-    coords.value.x = e.clientX
-    coords.value.y = e.clientY
-    dragging.value = true
-    e.preventDefault()
-
-    // if (this.top == 0) {
-    //   this.top = this.$refs.modalRef.getBoundingClientRect().y;
-    // }
-    console.log('elem ', elem)
-    console.log(e)
   }
 
   const clickUp = (e, { item, index }) => {
@@ -53,17 +52,52 @@
   const onDrag = event => {
     if (dragging.value) {
       mouseMove.value = true
+      elemMoving(event)
+    }
+  }
 
-      const { clientX, clientY } = event.changedTouches
-        ? event.changedTouches[0]
-        : event
+  const elemMoving = event => {
+    const { clientX, clientY } = event.changedTouches
+      ? event.changedTouches[0]
+      : event
+    const coordsElem = currentTodo.value.getBoundingClientRect()
 
-      console.log('currentTodo ', currentTodo)
-      console.log('currentTodo value', currentTodo.value)
+    currentTodo.value.style.position = 'absolute'
+    currentTodo.value.style.top = `${clientY - indent.value.y}px`
+    currentTodo.value.style.left = `${clientX - indent.value.x}px`
+  }
 
-      currentTodo.value.style.position = 'absolute'
-      currentTodo.value.style.top = `${clientY}px`
-      currentTodo.value.style.left = `${clientX}px`
+  const intersectObs = event => {
+    // ball.hidden = true;
+    let elemBelow = document.elementFromPoint(event.clientX, event.clientY)
+    // ball.hidden = false;
+
+    // событие mousemove может произойти и когда указатель за пределами окна
+    // (мяч перетащили за пределы экрана)
+
+    // если clientX/clientY за пределами окна, elementFromPoint вернёт null
+    if (!elemBelow) return
+
+    // потенциальные цели переноса помечены классом droppable (может быть и другая логика)
+    let droppableBelow = elemBelow.closest('.droppable')
+
+    if (currentDroppable != droppableBelow) {
+      // мы либо залетаем на цель, либо улетаем из неё
+      // внимание: оба значения могут быть null
+      //   currentDroppable=null,
+      //     если мы были не над droppable до этого события (например, над пустым пространством)
+      //   droppableBelow=null,
+      //     если мы не над droppable именно сейчас, во время этого события
+
+      if (currentDroppable) {
+        // логика обработки процесса "вылета" из droppable (удаляем подсветку)
+        leaveDroppable(currentDroppable)
+      }
+      currentDroppable = droppableBelow
+      if (currentDroppable) {
+        // логика обработки процесса, когда мы "влетаем" в элемент droppable
+        enterDroppable(currentDroppable)
+      }
     }
   }
 
@@ -73,8 +107,10 @@
     currentTodo.value.style.position = 'relative'
     currentTodo.value.style.top = `auto`
     currentTodo.value.style.left = `auto`
-    // currentTodo.value.style.top = `${coords.value.y}px`
-    // currentTodo.value.style.left = `${coords.value.x}px`
+    coords.value.x = 0
+    coords.value.y = 0
+    indent.value.x = 0
+    indent.value.y = 0
   }
 </script>
 <template>

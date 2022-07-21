@@ -6,24 +6,28 @@
       {
         "id": 1,
         "title": "First ToDo",
+        "column": 1,
         "description": "quia et xpedita et cum\n suscipitchitecto",
         "dateCreate": "15.07.2022"
       },
       {
         "id": 2,
         "title": "Second ToDo",
+        "column": 1,
         "description": "quia et xpedita et cum\n suscipitchitecto",
         "dateCreate": "14.07.2022"
       },
       {
         "id": 3,
         "title": "Third ToDo",
+        "column": 1,
         "description": "quia et xpedita et cum\n suscipitchitecto",
         "dateCreate": "13.07.2022"
       },
       {
         "id": 4,
         "title": "Fourth ToDo",
+        "column": 1,
         "description": "quia et xpedita et cum\n suscipitchitecto",
         "dateCreate": "12.07.2022"
       }
@@ -37,22 +41,39 @@
       {
         "id": 5,
         "title": "Fiveth ToDo",
+        "column": 2,
         "description": "quia et xpedita et cum\n suscipitchitecto",
         "dateCreate": "15.07.2022"
       },
       {
         "id": 6,
         "title": "Sixth ToDo",
+        "column": 2,
         "description": "quia et xpedita et cum\n suscipitchitecto",
         "dateCreate": "14.07.2022"
       },
       {
         "id": 7,
         "title": "Seventh ToDo",
+        "column": 2,
         "description": "quia et xpedita et cum\n suscipitchitecto",
         "dateCreate": "13.07.2022"
       }
     ],
     "dateCreate": "12.07.2022"
+  },
+  {
+    "id": 3,
+    "title": "Column 2",
+    "items": [
+      {
+        "id": 8,
+        "title": "Eighth ToDo",
+        "column": 3,
+        "description": "quia et xpedita et cum\n suscipitchitecto",
+        "dateCreate": "11.07.2022"
+      }
+    ],
+    "dateCreate": "11.08.2022"
   }
 ]
