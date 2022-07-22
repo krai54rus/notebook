@@ -16,23 +16,25 @@
         todoItem => todoItem.id === item.currItemId
       ),
     }
-    const dropColumn = store.columns[item.columnIndex]
-    // const dropElem = {
-    //   ...dropColumn.items[item.itemIndex],
-    // }
 
-    console.log('placeHolderItem ', placeHolderItem.value)
-
+    const dropColumn = store.columns[item.dropColumnIndex]
     const isPlaceholder = dropColumn.items.find(todo => todo.placeholder)
 
     if (!isPlaceholder) {
-      placeHolderItem.value.id = placeHolderItem.value.id * 1000
-      placeHolderItem.value.placeholder = true
-      placeHolderItem.value.column = item.columnId
-      placeHolderItem.value.columnIndex = item.columnIndex
+      placeHolderItem.value = {
+        ...placeHolderItem.value,
+        id: placeHolderItem.value.id * 1000,
+        placeholder: true,
+        column: item.dropColumnId,
+        columnIndex: item.dropColumnIndex,
+      }
       if (item.name === 'column') {
         console.log('placeHolderItem ', placeHolderItem.value)
         dropColumn.items.push(placeHolderItem.value)
+      } else {
+        // const dropElem = {
+        //   ...dropColumn.items[item.dropItemIndex],
+        // }
       }
     } else {
       // if (dropColumn.items[dropColumn.items.length - 1].placeholder) {
@@ -59,7 +61,12 @@
   const saveItem = item => {
     const phItem = placeHolderItem.value
     if (phItem) {
-      const newEl = { ...phItem, placeholder: false, moving: false }
+      const newEl = {
+        ...phItem,
+        id: item.itemId,
+        placeholder: false,
+        moving: false,
+      }
 
       const index = store.columns[phItem.columnIndex].items.findIndex(
         el => el.id === phItem.id
@@ -67,8 +74,8 @@
       delete newEl.columnIndex
       store.columns[phItem.columnIndex].items[index] = newEl
       store.columns[item.columnIndex].items.splice(item.itemIndex, 1)
-      placeHolderItem.value = null
     }
+    placeHolderItem.value = null
   }
 
   const deleteItem = item => {
@@ -77,16 +84,16 @@
     //     todoItem => todoItem.id === item.currItemId
     //   ),
     // }
-    const dropColumn = store.columns[item.columnIndex]
+    const dropColumn = store.columns[item.dropColumnIndex]
     // const dropElem = {
     //   ...dropColumn.items[item.itemIndex],
     // }
 
     // console.log(store.columns[item.columnIndex].items)
 
-    store.columns[item.columnIndex].items = store.columns[
-      item.columnIndex
-    ].items.filter(todo => !todo.placeholder)
+    store.columns[item.dropColumnIndex].items = dropColumn.items.filter(
+      todo => !todo.placeholder
+    )
 
     // if (dropColumn.items[dropColumn.items.length - 1].placeholder) {
     //   dropColumn.items.pop()

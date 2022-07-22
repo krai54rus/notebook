@@ -114,10 +114,10 @@
       if (currentDroppable.value) {
         // логика обработки процесса "вылета" из droppable (удаляем подсветку)
         deleteItem({
-          itemId: +droppableElem?.dataset.itemid,
-          itemIndex: +droppableElem?.dataset.itemindex,
-          columnId: +currentDroppable.value.dataset.columnid,
-          columnIndex: +currentDroppable.value.dataset.columnindex,
+          dropItemId: +droppableElem?.dataset.itemid,
+          dropItemIndex: +droppableElem?.dataset.itemindex,
+          dropColumnId: +currentDroppable.value.dataset.columnid,
+          dropColumnIndex: +currentDroppable.value.dataset.columnindex,
           currColumnId: +props.column.id,
           currColumnIndex: +props.columnIndex,
           currItemId: +currentTodo.value.dataset.itemid,
@@ -131,8 +131,8 @@
         // Пересечение только с таблицей
         if (droppableArea && droppableElem === null) {
           addItem({
-            columnId: +droppableArea.dataset.columnid,
-            columnIndex: +droppableArea.dataset.columnindex,
+            dropColumnId: +droppableArea.dataset.columnid,
+            dropColumnIndex: +droppableArea.dataset.columnindex,
             currColumnId: +props.column.id.toString(),
             currColumnIndex: +props.columnIndex.toString(),
             currItemId: +currentTodo.value.dataset.itemid,
@@ -144,10 +144,10 @@
         // Пересечение с элементом
         if (droppableElem) {
           addItem({
-            itemId: +droppableElem.dataset.itemid,
-            itemIndex: +droppableElem.dataset.itemindex,
-            columnId: +droppableArea.dataset.columnid,
-            columnIndex: +droppableArea.dataset.columnindex,
+            dropItemId: +droppableElem.dataset.itemid,
+            dropItemIndex: +droppableElem.dataset.itemindex,
+            dropColumnId: +droppableArea.dataset.columnid,
+            dropColumnIndex: +droppableArea.dataset.columnindex,
             currColumnId: +props.column.id,
             currColumnIndex: +props.columnIndex,
             currItemId: +currentTodo.value.dataset.itemid,
