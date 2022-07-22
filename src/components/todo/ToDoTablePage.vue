@@ -79,25 +79,11 @@
   }
 
   const deleteItem = item => {
-    // const currItem = {
-    //   ...store.columns[item.currColumnIndex].items.find(
-    //     todoItem => todoItem.id === item.currItemId
-    //   ),
-    // }
     const dropColumn = store.columns[item.dropColumnIndex]
-    // const dropElem = {
-    //   ...dropColumn.items[item.itemIndex],
-    // }
-
-    // console.log(store.columns[item.columnIndex].items)
 
     store.columns[item.dropColumnIndex].items = dropColumn.items.filter(
       todo => !todo.placeholder
     )
-
-    // if (dropColumn.items[dropColumn.items.length - 1].placeholder) {
-    //   dropColumn.items.pop()
-    // }
   }
 </script>
 

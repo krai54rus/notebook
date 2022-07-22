@@ -23,12 +23,17 @@
 
   let dragging = ref(false)
   let mouseMove = ref(false)
-  const itemRefs = ref([])
+  const itemsArr = ref([])
+  const itemRefs = { itemsArr }
   const currentTodo = ref(null)
   const currentDroppable = ref(null)
   const startCoords = ref({ x: 0, y: 0 })
   const indent = ref({ x: 0, y: 0 })
   const emit = defineEmits(['add-item', 'delete-item', 'save-item'])
+
+  const testF = () => {
+    console.log(itemRefs.itemsArr.value)
+  }
 
   const addItem = item => {
     emit('add-item', item)
@@ -49,7 +54,7 @@
 
   const dragStart = (e, { item, index }) => {
     e.preventDefault()
-    const elem = itemRefs.value[index]
+    const elem = itemRefs.itemsArr.value[index]
     if (elem) {
       dragging.value = true
       currentTodo.value = elem
@@ -59,8 +64,6 @@
       indent.value.x = e.clientX - coordsElem.left
       indent.value.y = e.clientY - coordsElem.top
       props.column.items[index].moving = true
-      // currentTodo.value.classList.add('table-column__moving-item')
-      // columnItems
     }
   }
 
@@ -209,7 +212,11 @@
         <div>...</div>
       </div>
       <div :class="$style['table-column__content']">
-        <div class="n-flex n-flex-column" :class="$style['table-column__list']">
+        <div
+          class="n-flex n-flex-column"
+          :class="$style['table-column__list']"
+          @click="testF()"
+        >
           <div
             v-for="(item, index) in columnItems"
             class="n-p-4 n-mb-8 n-flex n-justify-start n-radius--full-sm"
@@ -219,7 +226,7 @@
               [$style['table-column__moving-item']]: item.moving,
               [$style['placeholder']]: item.placeholder,
             }"
-            :ref="el => itemRefs.push(el)"
+            :ref="itemRefs.itemsArr"
             :key="item.id"
             :data-itemid="item.id"
             :data-itemindex="index"
