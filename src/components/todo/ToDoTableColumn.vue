@@ -129,8 +129,21 @@
         // currentDroppable.value = null
       }
       currentDroppable.value = droppableArea
+      // логика обработки процесса, когда мы "влетаем" в элемент droppable
       if (currentDroppable.value) {
-        //   // логика обработки процесса, когда мы "влетаем" в элемент droppable
+        // Пересечение с элементом
+        if (droppableArea && droppableElem) {
+          addItem({
+            dropItemId: +droppableElem.dataset.itemid,
+            dropItemIndex: +droppableElem.dataset.itemindex,
+            dropColumnId: +droppableArea.dataset.columnid,
+            dropColumnIndex: +droppableArea.dataset.columnindex,
+            currColumnId: +props.column.id,
+            currColumnIndex: +props.columnIndex,
+            currItemId: +currentTodo.value.dataset.itemid,
+            currItemIndex: +currentTodo.value.dataset.itemindex,
+          })
+        }
         // Пересечение только с таблицей
         if (droppableArea && droppableElem === null) {
           addItem({
@@ -143,7 +156,11 @@
             name: 'column',
           })
         }
-
+        //   enterDroppable(currentDroppable.value)
+      }
+    } else {
+      if (droppableArea) {
+        currentDroppable.value = droppableArea
         // Пересечение с элементом
         if (droppableElem) {
           addItem({
@@ -157,7 +174,6 @@
             currItemIndex: +currentTodo.value.dataset.itemindex,
           })
         }
-        //   enterDroppable(currentDroppable.value)
       }
     }
   }
