@@ -46,17 +46,13 @@
           columnIndex: item.dropColumnIndex,
         }
 
-        console.log('placeHolderItem.value splice', placeHolderItem.value)
-
         dropColumn.items.splice(item.dropItemIndex, 0, placeHolderItem.value)
       }
     } else {
       if (
-        dropColumn.items[item.dropItemIndex] &&
-        dropColumn.items[item.dropItemIndex].placeholder
+        !dropColumn.items[item.dropItemIndex] ||
+        !dropColumn.items[item.dropItemIndex].placeholder
       ) {
-        console.log('нижний элемент - placeholder')
-      } else {
         store.columns[item.dropColumnIndex].items = dropColumn.items.filter(
           todo => !todo.placeholder
         )

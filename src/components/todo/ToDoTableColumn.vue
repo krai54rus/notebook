@@ -249,7 +249,9 @@
             @mousedown="dragStart($event, { item, index })"
             @mouseup="clickItemUp($event, { item, index })"
           >
-            {{ item.placeholder ? '' : item.title }}
+            <div>
+              {{ item.placeholder ? '' : item.title }}
+            </div>
           </div>
         </div>
       </div>
