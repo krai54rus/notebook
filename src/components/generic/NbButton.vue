@@ -33,7 +33,7 @@
 </script>
 <template>
   <div
-    class="n-flex n-justify-center n-align-center"
+    class="n-flex n-justify-center n-align-center n-wp-100"
     :class="{
       [$style['green']]: true,
       [$style['button']]: true,

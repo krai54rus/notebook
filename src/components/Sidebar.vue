@@ -6,7 +6,7 @@
   import todoSvg from '@/assets/icons/todo.svg?raw'
   import constructorSvg from '@/assets/icons/constructor.svg?raw'
   import arrowDownSvg from '@/assets/icons/16/arrow_down.svg?raw'
-  import plusSvg from '@/assets/icons/16/plus.svg?raw'
+  import plusSvg from '@/assets/icons/plus_24.svg?raw'
 
   const iconFunc = (name: string): any => {
     switch (name) {
@@ -69,39 +69,15 @@
         </div>
         <div :class="[$style['menu__info_item'], $style['menu__create']]">
           <div :class="$style['menu__create-button']">
-            <nb-button text="Создать" color="green">
+            <nb-button text="Создать" color="green" size="small">
               <template #before-text>
-                <div
-                  :class="[
-                    $style['menu__create-icon'],
-                    $style['menu__create-plus'],
-                  ]"
-                  v-html="plusSvg"
-                />
-              </template>
-              <template #after-text>
-                <div
-                  :class="[$style['menu__create-icon'], ['menu__create-arrow']]"
-                  v-html="arrowDownSvg"
+                <nb-icon
+                  class="n-mr-8"
+                  :class="$style['menu__create-icon']"
+                  name="plus"
                 />
               </template>
             </nb-button>
-            <!-- <div :class="$style['menu__create-left']">
-              <div
-                :class="[
-                  $style['menu__create-icon'],
-                  $style['menu__create-plus'],
-                ]"
-                v-html="plusSvg"
-              ></div>
-              <div>Создать</div>
-            </div>
-            <div :class="$style['menu__create-right']">
-              <div
-                :class="[$style['menu__create-icon'], ['menu__create-arrow']]"
-                v-html="arrowDownSvg"
-              ></div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -192,6 +168,7 @@
 
         &-icon {
           fill: var(--color-white);
+          stroke: var(--color-white);
         }
       }
 
