@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from 'vue-router'
 import Main from '@/components/Main.vue'
 import About from '@/components/About.vue'
 import ToDo from '@/components/ToDo.vue'
+import Test from '@/components/Test.vue'
 import ToDoTablePage from '@/components/todo/ToDoTablePage.vue'
 
 const routes = [
@@ -19,6 +20,11 @@ const routes = [
     path: '/todo',
     name: 'ToDo',
     component: ToDo,
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test,
   },
   {
     path: '/todo/table/:id',
