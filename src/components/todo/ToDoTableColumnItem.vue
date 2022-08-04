@@ -6,11 +6,13 @@
   interface Props {
     item: any
     index: number
+    columnIndex: number
   }
 
   const props = withDefaults(defineProps<Props>(), {
     item: {},
     index: 0,
+    columnIndex: 0,
   })
 
   const elem = ref(null)
@@ -23,12 +25,19 @@
       e,
       item: props.item,
       index: props.index,
+      columnIndex: props.columnIndex,
       elem: elem.value,
     })
   }
 
   const handleClickUp = e => {
-    emit('click', { e, item: props.item, index: props.index, elem: elem.value })
+    emit('click', {
+      e,
+      item: props.item,
+      index: props.index,
+      columnIndex: props.columnIndex,
+      elem: elem.value,
+    })
   }
 </script>
 
@@ -39,7 +48,7 @@
       [$style['column-item']]: true,
       'column-drop-item': !item.moving,
       [$style['column-moving-item']]: item.moving,
-      [$style['placeholder']]: item.placeholder,
+      [$style['column-item_placeholder']]: item.placeholder,
     }"
     ref="elem"
     :data-itemid="item.id"
@@ -67,9 +76,10 @@
     &:hover {
       background-color: var(--color-white-hovered);
     }
-    // &__moving-item {
-    //   position: absolute;
-    //   z-index: 100;
-    // }
+
+    &_placeholder {
+      background-color: var(--gainsboro);
+      height: 24px;
+    }
   }
 </style>

@@ -14,7 +14,8 @@
   let mouseMove = ref(false)
   // const itemsArr = ref([])
   // const itemRefs = { itemsArr }
-  const currentTodo = ref(null)
+  const currTodoEl = ref(null)
+  const currTodoItem = ref(null)
   const currentDroppable = ref(null)
   const startCoords = ref({ x: 0, y: 0 })
   const indent = ref({ x: 0, y: 0 })
@@ -24,19 +25,22 @@
     document.addEventListener('mouseup', dragStop)
   })
 
-  const dragStart = ({ e, item, index, elem }) => {
+  const dragStart = ({ e, item, index, elem, columnIndex }) => {
     e.preventDefault()
-    console.log('elem ', elem)
-    // const elem = itemRefs.itemsArr.value[index]
     if (elem) {
       dragging.value = true
-      currentTodo.value = elem
+      currTodoEl.value = elem
+      currTodoItem.value = {
+        ...item,
+        columnIndex,
+        index,
+      }
       const coordsElem = elem.getBoundingClientRect()
       startCoords.value.x = e.clientX
       startCoords.value.y = e.clientY
       indent.value.x = e.clientX - coordsElem.left
       indent.value.y = e.clientY - coordsElem.top
-      columns[item.column].items[index].moving = true
+      columns.value[columnIndex].items[index].moving = true
     }
   }
 
@@ -48,7 +52,7 @@
     }
   }
 
-  const clickItemUp = param => {
+  const clickItemUp = ({ e, item, index, elem, columnIndex }) => {
     console.log('click Item Up, openModal')
     if (mouseMove.value) {
       dragStop(e)
@@ -61,24 +65,24 @@
     const { clientX, clientY } = event.changedTouches
       ? event.changedTouches[0]
       : event
-    const coordsElem = currentTodo.value.getBoundingClientRect()
-    currentTodo.value.style.top = `${clientY - indent.value.y}px`
-    currentTodo.value.style.left = `${clientX - indent.value.x}px`
+    const coordsElem = currTodoEl.value.getBoundingClientRect()
+    currTodoEl.value.style.top = `${clientY - indent.value.y}px`
+    currTodoEl.value.style.left = `${clientX - indent.value.x}px`
   }
 
   const intersectObs = event => {
-    currentTodo.value.style.display = 'none'
+    currTodoEl.value.style.display = 'none'
     // Делаем невидимым элемент, чтобы узнать какой элемент находится под курсором
     let elemBelow = document.elementFromPoint(event.clientX, event.clientY)
-    currentTodo.value.style.position = 'absolute'
-    currentTodo.value.style.zIndex = '1000'
-    currentTodo.value.style.display = 'flex'
+    currTodoEl.value.style.position = 'absolute'
+    currTodoEl.value.style.zIndex = '1000'
+    currTodoEl.value.style.display = 'flex'
 
     if (!elemBelow) return
 
     // потенциальные цели переноса помечены классом droppable (может быть и другая логика)
     let droppableArea = elemBelow.closest('.table-column__drop-area')
-    let droppableElem = elemBelow.closest('.table-column__drop-item')
+    let droppableElem = elemBelow.closest('.column-drop-item')
 
     if (currentDroppable.value != droppableArea) {
       // мы либо залетаем на цель, либо улетаем из неё
@@ -91,14 +95,14 @@
       if (currentDroppable.value) {
         // логика обработки процесса "вылета" из droppable (удаляем подсветку)
         deleteItem({
-          dropItemId: +droppableElem?.dataset.itemid,
-          dropItemIndex: +droppableElem?.dataset.itemindex,
+          // dropItemId: +droppableElem?.dataset.itemid,
+          // dropItemIndex: +droppableElem?.dataset.itemindex,
           dropColumnId: +currentDroppable.value.dataset.columnid,
           dropColumnIndex: +currentDroppable.value.dataset.columnindex,
-          currColumnId: +props.column.id,
-          currColumnIndex: +props.columnIndex,
-          currItemId: +currentTodo.value.dataset.itemid,
-          currItemIndex: +currentTodo.value.dataset.itemindex,
+          // currColumnId: +currTodoItem.value.column,
+          // currColumnIndex: +currTodoItem.value.columnIndex,
+          // currItemId: +currTodoItem.value.dataset.itemid,
+          // currItemIndex: +currTodoEl.value.dataset.itemindex,
         })
         // currentDroppable.value = null
       }
@@ -112,10 +116,10 @@
             dropItemIndex: +droppableElem.dataset.itemindex,
             dropColumnId: +droppableArea.dataset.columnid,
             dropColumnIndex: +droppableArea.dataset.columnindex,
-            currColumnId: +props.column.id,
-            currColumnIndex: +props.columnIndex,
-            currItemId: +currentTodo.value.dataset.itemid,
-            currItemIndex: +currentTodo.value.dataset.itemindex,
+            currColumnId: +currTodoItem.value.column,
+            currColumnIndex: +currTodoItem.value.columnIndex,
+            currItemId: +currTodoItem.value.id,
+            currItemIndex: +currTodoEl.value.dataset.itemindex,
           })
         }
         // Пересечение только с таблицей
@@ -123,10 +127,10 @@
           addItem({
             dropColumnId: +droppableArea.dataset.columnid,
             dropColumnIndex: +droppableArea.dataset.columnindex,
-            currColumnId: +props.column.id.toString(),
-            currColumnIndex: +props.columnIndex.toString(),
-            currItemId: +currentTodo.value.dataset.itemid,
-            currItemIndex: +currentTodo.value.dataset.itemindex,
+            currColumnId: +currTodoItem.value.column,
+            currColumnIndex: +currTodoItem.value.columnIndex,
+            currItemId: +currTodoItem.value.id,
+            currItemIndex: +currTodoEl.value.dataset.itemindex,
             name: 'column',
           })
         }
@@ -142,10 +146,10 @@
             dropItemIndex: +droppableElem.dataset.itemindex,
             dropColumnId: +droppableArea.dataset.columnid,
             dropColumnIndex: +droppableArea.dataset.columnindex,
-            currColumnId: +props.column.id,
-            currColumnIndex: +props.columnIndex,
-            currItemId: +currentTodo.value.dataset.itemid,
-            currItemIndex: +currentTodo.value.dataset.itemindex,
+            currColumnId: +currTodoItem.value.column,
+            currColumnIndex: +currTodoItem.value.columnIndex,
+            currItemId: +currTodoItem.value.id,
+            currItemIndex: +currTodoEl.value.dataset.itemindex,
           })
         }
       }
@@ -158,23 +162,32 @@
     // Todo - сохранение позиции элемента после отжатия кнопки
     dragging.value = false
     mouseMove.value = false
-    if (currentTodo && currentTodo.value) {
-      if (columns.items[currentTodo.value.dataset.itemindex]) {
-        columns.items[currentTodo.value.dataset.itemindex].moving = false
+
+    if (currTodoEl.value && currTodoItem.value) {
+      if (
+        columns.value[currTodoItem.value.columnIndex].items[
+          currTodoEl.value.dataset.itemindex
+        ]
+      ) {
+        columns.value[currTodoItem.value.columnIndex].items[
+          currTodoEl.value.dataset.itemindex
+        ].moving = false
       }
-      currentTodo.value.style.top = `auto`
-      currentTodo.value.style.left = `auto`
-      currentTodo.value.style.position = 'relative'
-      currentTodo.value.style.display = 'flex'
-      currentTodo.value.style.zIndex = '10'
+      currTodoEl.value.style.top = `auto`
+      currTodoEl.value.style.left = `auto`
+      currTodoEl.value.style.position = 'relative'
+      currTodoEl.value.style.display = 'flex'
+      currTodoEl.value.style.zIndex = '10'
       saveItem({
-        itemId: +currentTodo.value.dataset.itemid,
-        itemIndex: +currentTodo.value.dataset.itemindex,
-        columnId: props.column.id,
-        columnIndex: props.columnIndex,
+        itemId: +currTodoItem.value.id,
+        itemIndex: +currTodoItem.value.index,
+        columnId: +currTodoItem.value.column,
+        columnIndex: +currTodoItem.value.columnIndex,
       })
     }
 
+    currTodoEl.value = null
+    currTodoItem.value = null
     startCoords.value.x = 0
     startCoords.value.y = 0
     indent.value.x = 0
@@ -183,17 +196,19 @@
 
   const addItem = item => {
     placeHolderItem.value = {
-      ...columns[item.currColumnIndex].items.find(
+      ...columns.value[item.currColumnIndex].items.find(
         todoItem => todoItem.id === item.currItemId
       ),
       placeholder: true,
     }
 
+    console.log('placeHolderItem.value ', placeHolderItem.value)
+
     if (!placeHolderItem.value) {
       return
     }
 
-    const dropColumn = columns[item.dropColumnIndex]
+    const dropColumn = columns.value[item.dropColumnIndex]
     const isPlaceholder = dropColumn.items.find(todo => todo.placeholder)
 
     if (!isPlaceholder) {
@@ -246,7 +261,7 @@
     if (phItem) {
       const newEl = {
         ...phItem,
-        id: item.itemId,
+        id: item.id,
         placeholder: false,
         moving: false,
       }
@@ -262,7 +277,7 @@
   }
 
   const deleteItem = item => {
-    const dropColumn = store.columns[item.dropColumnIndex]
+    const dropColumn = columns.value[item.dropColumnIndex]
 
     store.columns[item.dropColumnIndex].items = dropColumn.items.filter(
       todo => !todo.placeholder
@@ -292,6 +307,7 @@
             :key="item.id"
             :item="item"
             :index="itemI"
+            :column-index="columnI"
             @drag-start="dragStart($event)"
             @click="clickItemUp($event)"
           >
