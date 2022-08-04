@@ -159,7 +159,6 @@
   const dragStop = e => {
     console.log('dragstop')
     //Очистка всех значений до первоначальных
-    // Todo - сохранение позиции элемента после отжатия кнопки
     dragging.value = false
     mouseMove.value = false
 
@@ -201,8 +200,6 @@
       ),
       placeholder: true,
     }
-
-    console.log('placeHolderItem.value ', placeHolderItem.value)
 
     if (!placeHolderItem.value) {
       return
@@ -258,8 +255,14 @@
 
   const saveItem = item => {
     const phItem = placeHolderItem.value
+
+    let newEl = {
+      ...item,
+      placeholder: false,
+      moving: false,
+    }
     if (phItem) {
-      const newEl = {
+      newEl = {
         ...phItem,
         id: item.id,
         placeholder: false,
@@ -271,8 +274,11 @@
       )
       delete newEl.columnIndex
       store.columns[phItem.columnIndex].items[index] = newEl
-      store.columns[item.columnIndex].items.splice(item.itemIndex, 1)
+    } else {
+      delete newEl.columnIndex
+      store.columns[newEl.columnIndex].items[item.itemIndex] = newEl
     }
+    store.columns[item.columnIndex].items.splice(item.itemIndex, 1)
     placeHolderItem.value = null
   }
 
@@ -282,6 +288,8 @@
     store.columns[item.dropColumnIndex].items = dropColumn.items.filter(
       todo => !todo.placeholder
     )
+
+    placeHolderItem.value = null
   }
 </script>
 
