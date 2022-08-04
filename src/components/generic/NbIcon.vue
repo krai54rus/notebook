@@ -10,20 +10,12 @@
     name: '',
   })
 
-  console.log('icons ', icons)
-  console.log('icons ', icons['constructor'])
-
   const currIcon = computed(() => icons[props.name])
 
   const emit = defineEmits(['click'])
   const handleClick = params => {
     emit('click', params)
   }
-
-  //   const emit = defineEmits<{
-  //   (e: 'change', id: number): void
-  //   (e: 'update', value: string): void
-  // }>()
 </script>
 <template>
   <div
