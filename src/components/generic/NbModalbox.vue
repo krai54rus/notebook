@@ -13,6 +13,8 @@
   //   resize: false,
   // })
 
+  const className = 'modalbox'
+
   const emit = defineEmits(['close', 'change'])
   const handleClose = params => {
     emit('close', params)

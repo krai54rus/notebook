@@ -1,8 +1,9 @@
 <script lang="ts" setup>
   import { useToDoStore } from '@/pinia/todo'
   import { ref, computed, onMounted } from 'vue'
-  import ToDoTableColumn from './ToDoTableColumn.vue'
-  import ToDoTableColumnItem from './ToDoTableColumnItem.vue'
+  import TodoTableColumn from './TodoTableColumn.vue'
+  import TodoTableColumnItem from './TodoTableColumnItem.vue'
+  import ModalTodoItem from './ModalTodoItem.vue'
   import plusSvg from '@/assets/icons/plus.svg?raw'
 
   const store = useToDoStore()
@@ -12,8 +13,10 @@
   const placeHolderItem = ref(null)
   let dragging = ref(false)
   let mouseMove = ref(false)
+  let isModalTodoItem = ref(false)
   // const itemsArr = ref([])
   // const itemRefs = { itemsArr }
+  const itemInfo = ref(null)
   const currTodoEl = ref(null)
   const currTodoItem = ref(null)
   const currentDroppable = ref(null)
@@ -53,11 +56,13 @@
   }
 
   const clickItemUp = ({ e, item, index, elem, columnIndex }) => {
-    console.log('click Item Up, openModal')
     if (mouseMove.value) {
+      console.log('clickItemUp mouseMove ', mouseMove.value)
       dragStop(e)
     } else {
-      console.log('click Item Up, openModal')
+      itemInfo.value = item
+      isModalTodoItem = true
+      console.log('click Item up')
     }
   }
 
@@ -158,11 +163,12 @@
 
   const dragStop = e => {
     console.log('dragstop')
+    let isMoved = mouseMove.value
     //Очистка всех значений до первоначальных
     dragging.value = false
     mouseMove.value = false
 
-    if (currTodoEl.value && currTodoItem.value) {
+    if (isMoved && currTodoEl.value && currTodoItem.value) {
       if (
         columns.value[currTodoItem.value.columnIndex].items[
           currTodoEl.value.dataset.itemindex
@@ -261,6 +267,7 @@
       placeholder: false,
       moving: false,
     }
+
     if (phItem) {
       newEl = {
         ...phItem,
@@ -275,7 +282,6 @@
       delete newEl.columnIndex
       store.columns[phItem.columnIndex].items[index] = newEl
     } else {
-      delete newEl.columnIndex
       store.columns[newEl.columnIndex].items[item.itemIndex] = newEl
     }
     store.columns[item.columnIndex].items.splice(item.itemIndex, 1)
@@ -300,7 +306,7 @@
       class="n-pl-16 n-pt-16 n-flex n-justify-start n-align-top n-wp-100 n-hp-100"
       :class="$style['todo-table__content']"
     >
-      <ToDoTableColumn
+      <TodoTableColumn
         v-for="(column, columnI) in columns"
         :key="column.id"
         :column="column"
@@ -310,7 +316,7 @@
         @save-item="saveItem($event)"
       >
         <template #content>
-          <ToDoTableColumnItem
+          <TodoTableColumnItem
             v-for="(item, itemI) in column.items"
             :key="item.id"
             :item="item"
@@ -320,11 +326,16 @@
             @click="clickItemUp($event)"
           >
             {{ item.id }}
-          </ToDoTableColumnItem>
+          </TodoTableColumnItem>
         </template>
-      </ToDoTableColumn>
+      </TodoTableColumn>
     </div>
     <div :class="$style['todo-table__sidebar']"></div>
+    <ModalTodoItem
+      v-if="isModalTodoItem.value"
+      :item="itemInfo.value"
+      @close="isModalTodoItem.value = false"
+    ></ModalTodoItem>
   </div>
 </template>
 
