@@ -1,15 +1,25 @@
 <script lang="ts" setup>
   import { ref, computed, onMounted } from 'vue'
   import plusSvg from '@/assets/icons/plus_24.svg?raw'
-  import ToDoColumnModel from '@/entities/todo/ToDoColumnModel'
+  import TodoColumnModel from '@/entities/todo/TodoColumnModel'
+  import { ITodoColumn } from '@/entities/todo/TodoColumnTypes'
 
   interface Props {
-    column: IToDoColumn
+    column: ITodoColumn
     index: number
   }
 
-  const props = withDefaults(defineProps<Props>(), {
-    column: ToDoColumnModel.create(),
+  const empt = (): ITodoColumn => {
+    return {
+      id: '',
+      title: '',
+      items: [],
+      dateCreate: '',
+    }
+  }
+
+  withDefaults(defineProps<Props>(), {
+    column: TodoColumnModel.create(),
     index: 0,
   })
 </script>

@@ -4,7 +4,8 @@
   import { useTestStore } from '@/pinia/test'
 
   const store = useTestStore()
-  store.loaditems('module/loaditems')
+  store.loaditems()
+
   const data = computed(() => store.items)
   const items = ref([
     { id: 1, text: 'elem 1', list: 1 },

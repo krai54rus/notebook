@@ -264,17 +264,22 @@
 
     let newEl = {
       ...item,
+      id: item.itemId,
       placeholder: false,
       moving: false,
     }
 
+    console.log('newEl ', newEl)
+
     if (phItem) {
       newEl = {
         ...phItem,
-        id: item.id,
+        id: item.itemId,
         placeholder: false,
         moving: false,
       }
+
+      console.log('newEl ', newEl)
 
       const index = store.columns[phItem.columnIndex].items.findIndex(
         el => el.id === phItem.id
@@ -286,6 +291,7 @@
     }
     store.columns[item.columnIndex].items.splice(item.itemIndex, 1)
     placeHolderItem.value = null
+    currentDroppable.value = null
   }
 
   const deleteItem = item => {
@@ -296,6 +302,7 @@
     )
 
     placeHolderItem.value = null
+    currentDroppable.value = null
   }
 </script>
 
