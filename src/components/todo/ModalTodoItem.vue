@@ -6,26 +6,30 @@
   const props = withDefaults(defineProps<Props>(), {
     item: {},
   })
+
+  const emit = defineEmits(['close'])
 </script>
 
 <template>
-  <nb-modalbox>
-    <template #header>
-      <div>
-        <h2>{{ item?.name }}</h2>
-      </div>
-    </template>
-    <template #content>
-      <div>
-        <h2>{{ item?.desc }}</h2>
-      </div>
-    </template>
-    <template #footer>
-      <div class="n-wp-100 n-flex n-justify-end">
-        <nb-button text="Сохранить" />
-      </div>
-    </template>
-  </nb-modalbox>
+  <nb-overlay @close="emit('close')">
+    <nb-modalbox>
+      <template #header>
+        <div>
+          <h2>{{ item.title }}</h2>
+        </div>
+      </template>
+      <template #content>
+        <div>
+          <h2>{{ item.description }}</h2>
+        </div>
+      </template>
+      <template #footer>
+        <div class="n-wp-100 n-flex n-justify-end">
+          <nb-button text="Сохранить" />
+        </div>
+      </template>
+    </nb-modalbox>
+  </nb-overlay>
 </template>
 
 <style lang="scss" module>

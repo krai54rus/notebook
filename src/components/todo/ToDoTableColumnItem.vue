@@ -19,7 +19,6 @@
 
   const handleDragStart = e => {
     e.preventDefault()
-    console.log('e i', e)
     emit('drag-start', {
       e,
       item: props.item,

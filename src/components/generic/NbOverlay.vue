@@ -5,7 +5,11 @@
   }
 </script>
 <template>
-  <div @click="handleClose()" class="n-flex n-align-start">
+  <div
+    class="n-flex n-align-start"
+    :class="$style['overlay']"
+    @click="handleClose()"
+  >
     <slot></slot>
   </div>
 </template>

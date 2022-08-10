@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useToDoStore } from '@/pinia/todo'
-  import { ref, computed, onMounted } from 'vue'
+  import { ref, computed, onMounted, nextTick } from 'vue'
   import TodoTableColumn from './TodoTableColumn.vue'
   import TodoTableColumnItem from './TodoTableColumnItem.vue'
   import ModalTodoItem from './ModalTodoItem.vue'
@@ -14,8 +14,6 @@
   let dragging = ref(false)
   let mouseMove = ref(false)
   let isModalTodoItem = ref(false)
-  // const itemsArr = ref([])
-  // const itemRefs = { itemsArr }
   const itemInfo = ref(null)
   const currTodoEl = ref(null)
   const currTodoItem = ref(null)
@@ -57,12 +55,12 @@
 
   const clickItemUp = ({ e, item, index, elem, columnIndex }) => {
     if (mouseMove.value) {
-      console.log('clickItemUp mouseMove ', mouseMove.value)
+      // console.log('clickItemUp mouseMove ', mouseMove.value)
       dragStop(e)
     } else {
       itemInfo.value = item
-      isModalTodoItem = true
-      console.log('click Item up')
+      isModalTodoItem.value = true
+      // console.log('click Item up')
     }
   }
 
@@ -85,7 +83,7 @@
 
     if (!elemBelow) return
 
-    // потенциальные цели переноса помечены классом droppable (может быть и другая логика)
+    // ближайшие контейнер и элемент
     let droppableArea = elemBelow.closest('.table-column__drop-area')
     let droppableElem = elemBelow.closest('.column-drop-item')
 
@@ -99,17 +97,10 @@
 
       if (currentDroppable.value) {
         // логика обработки процесса "вылета" из droppable (удаляем подсветку)
-        deleteItem({
-          // dropItemId: +droppableElem?.dataset.itemid,
-          // dropItemIndex: +droppableElem?.dataset.itemindex,
+        deletePlaceholder({
           dropColumnId: +currentDroppable.value.dataset.columnid,
           dropColumnIndex: +currentDroppable.value.dataset.columnindex,
-          // currColumnId: +currTodoItem.value.column,
-          // currColumnIndex: +currTodoItem.value.columnIndex,
-          // currItemId: +currTodoItem.value.dataset.itemid,
-          // currItemIndex: +currTodoEl.value.dataset.itemindex,
         })
-        // currentDroppable.value = null
       }
       currentDroppable.value = droppableArea
       // логика обработки процесса, когда мы "влетаем" в элемент droppable
@@ -139,7 +130,6 @@
             name: 'column',
           })
         }
-        //   enterDroppable(currentDroppable.value)
       }
     } else {
       if (droppableArea) {
@@ -162,7 +152,6 @@
   }
 
   const dragStop = e => {
-    console.log('dragstop')
     let isMoved = mouseMove.value
     //Очистка всех значений до первоначальных
     dragging.value = false
@@ -265,36 +254,47 @@
     let newEl = {
       ...item,
       id: item.itemId,
-      placeholder: false,
-      moving: false,
     }
 
-    console.log('newEl ', newEl)
-
     if (phItem) {
+      // replace placeholder item on current drag item, delete old position
       newEl = {
         ...phItem,
         id: item.itemId,
-        placeholder: false,
-        moving: false,
       }
 
-      console.log('newEl ', newEl)
-
-      const index = store.columns[phItem.columnIndex].items.findIndex(
-        el => el.id === phItem.id
+      const plIndex = store.columns[phItem.columnIndex].items.findIndex(
+        el => el.placeholder
       )
+
+      let indexItem = store.columns[phItem.columnIndex].items.findIndex(
+        el => el.id === item.itemId
+      )
+
+      if (indexItem === -1) {
+        indexItem = item.itemIndex
+      }
+
       delete newEl.columnIndex
-      store.columns[phItem.columnIndex].items[index] = newEl
+      delete newEl.placeholder
+      delete newEl.moving
+
+      store.columns[phItem.columnIndex].items[plIndex] = { ...newEl }
+      nextTick(() => {
+        store.columns[item.columnIndex].items.splice(indexItem, 1)
+      })
     } else {
-      store.columns[newEl.columnIndex].items[item.itemIndex] = newEl
+      // return to initial position
+      const findItem = store.columns[newEl.columnIndex].items.find(
+        el => el.id === newEl.itemId
+      )
+      store.columns[newEl.columnIndex].items[item.itemIndex] = findItem
     }
-    store.columns[item.columnIndex].items.splice(item.itemIndex, 1)
     placeHolderItem.value = null
     currentDroppable.value = null
   }
 
-  const deleteItem = item => {
+  const deletePlaceholder = item => {
     const dropColumn = columns.value[item.dropColumnIndex]
 
     store.columns[item.dropColumnIndex].items = dropColumn.items.filter(
@@ -303,6 +303,11 @@
 
     placeHolderItem.value = null
     currentDroppable.value = null
+  }
+
+  const closeModal = () => {
+    console.log('qwe')
+    isModalTodoItem.value = false
   }
 </script>
 
@@ -318,7 +323,7 @@
         :key="column.id"
         :column="column"
         :index="columnI"
-        @delete-item="deleteItem($event)"
+        @delete-item="deletePlaceholder($event)"
         @add-item="addItem($event)"
         @save-item="saveItem($event)"
       >
@@ -339,9 +344,9 @@
     </div>
     <div :class="$style['todo-table__sidebar']"></div>
     <ModalTodoItem
-      v-if="isModalTodoItem.value"
-      :item="itemInfo.value"
-      @close="isModalTodoItem.value = false"
+      v-if="isModalTodoItem"
+      :item="itemInfo"
+      @close="isModalTodoItem = false"
     ></ModalTodoItem>
   </div>
 </template>
