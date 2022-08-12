@@ -25,7 +25,9 @@
       </template>
       <template #footer>
         <div class="n-wp-100 n-flex n-justify-end">
-          <nb-button text="Сохранить" />
+          <div class="n-w-100">
+            <nb-button color="green" size="small" text="Сохранить" />
+          </div>
         </div>
       </template>
     </nb-modalbox>

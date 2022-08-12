@@ -368,7 +368,7 @@
           width: 100%;
         }
         &__title {
-          color: var(--color-text-black);
+          color: var(--color-black-main);
           font-size: var(--size-14);
           font-weight: var(--font-weight-semibold);
         }

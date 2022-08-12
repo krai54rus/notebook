@@ -27,6 +27,7 @@
     top: 0;
     width: 100%;
     z-index: 20;
+    cursor: pointer;
 
     @media only screen and (min-width: 1281px),
       only screen and (min-width: 901px) and (max-width: 1280px) {

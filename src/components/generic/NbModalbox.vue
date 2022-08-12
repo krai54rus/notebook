@@ -45,7 +45,7 @@
   $component: modalbox;
 
   .#{$component} {
-    background-color: var(--color-gray-main);
+    background-color: var(--color-gray-bgc-main);
     border-radius: 2px;
     margin: 48px 0 80px;
     overflow: hidden;
@@ -58,9 +58,6 @@
     }
     &__content {
       flex-grow: 1;
-    }
-    &__footer {
-      height: 60px;
     }
   }
 </style>
