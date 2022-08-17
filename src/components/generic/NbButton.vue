@@ -64,8 +64,8 @@
 
   @mixin color($color, $color-text: 0) {
     &:not(.#{$component}_disabled, .#{$component}_outline, .#{$component}_plain) {
-      color: $color-btn-white;
-      fill: $color-btn-white;
+      color: $color-white-main;
+      fill: $color-white-main;
       @if $color-text != 0 {
         color: $color;
         fill: $color;
@@ -113,15 +113,15 @@
   }
 
   $colors: (
-    'white': $color-btn-white,
-    'black': $color-btn-black,
-    'green': $color-btn-green,
-    'red': $color-btn-red,
-    'blue': $color-btn-blue,
-    'yellow': $color-btn-yellow,
-    'orange': $color-btn-orange,
-    'purple': $color-btn-purple,
-    'gray': $color-btn-gray,
+    'white': $color-white-main,
+    'black': $color-black-main,
+    'green': $color-green-main,
+    'red': $color-red-main,
+    'blue': $color-blue-main,
+    'yellow': $color-yellow-main,
+    'orange': $color-orange-main,
+    'purple': $color-purple-main,
+    'gray': $color-gray-main,
   );
 
   .#{$component} {

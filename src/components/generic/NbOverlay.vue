@@ -5,7 +5,11 @@
   }
 </script>
 <template>
-  <div @click="handleClose()" class="n-flex n-align-start">
+  <div
+    class="n-flex n-align-start"
+    :class="$style['overlay']"
+    @click="handleClose()"
+  >
     <slot></slot>
   </div>
 </template>
@@ -23,6 +27,7 @@
     top: 0;
     width: 100%;
     z-index: 20;
+    cursor: pointer;
 
     @media only screen and (min-width: 1281px),
       only screen and (min-width: 901px) and (max-width: 1280px) {

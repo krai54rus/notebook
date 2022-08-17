@@ -1,7 +1,6 @@
 <script lang="ts" setup>
   import { ref, computed, onMounted } from 'vue'
   import plusSvg from '@/assets/icons/plus_24.svg?raw'
-  import ToDoColumnModel from '@/entities/todo/ToDoColumnModel'
 
   interface Props {
     item: any
@@ -20,7 +19,6 @@
 
   const handleDragStart = e => {
     e.preventDefault()
-    console.log('e i', e)
     emit('drag-start', {
       e,
       item: props.item,

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
   import { useToDoStore } from '@/pinia/todo'
-  import { ref, computed, onMounted } from 'vue'
-  import ToDoTableColumn from './ToDoTableColumn.vue'
-  import ToDoTableColumnItem from './ToDoTableColumnItem.vue'
+  import { ref, computed, onMounted, nextTick } from 'vue'
+  import TodoTableColumn from './TodoTableColumn.vue'
+  import TodoTableColumnItem from './TodoTableColumnItem.vue'
+  import ModalTodoItem from './ModalTodoItem.vue'
   import plusSvg from '@/assets/icons/plus.svg?raw'
 
   const store = useToDoStore()
@@ -12,8 +13,8 @@
   const placeHolderItem = ref(null)
   let dragging = ref(false)
   let mouseMove = ref(false)
-  // const itemsArr = ref([])
-  // const itemRefs = { itemsArr }
+  let isModalTodoItem = ref(false)
+  const itemInfo = ref(null)
   const currTodoEl = ref(null)
   const currTodoItem = ref(null)
   const currentDroppable = ref(null)
@@ -53,11 +54,13 @@
   }
 
   const clickItemUp = ({ e, item, index, elem, columnIndex }) => {
-    console.log('click Item Up, openModal')
     if (mouseMove.value) {
+      // console.log('clickItemUp mouseMove ', mouseMove.value)
       dragStop(e)
     } else {
-      console.log('click Item Up, openModal')
+      itemInfo.value = item
+      isModalTodoItem.value = true
+      // console.log('click Item up')
     }
   }
 
@@ -80,7 +83,7 @@
 
     if (!elemBelow) return
 
-    // потенциальные цели переноса помечены классом droppable (может быть и другая логика)
+    // ближайшие контейнер и элемент
     let droppableArea = elemBelow.closest('.table-column__drop-area')
     let droppableElem = elemBelow.closest('.column-drop-item')
 
@@ -94,17 +97,10 @@
 
       if (currentDroppable.value) {
         // логика обработки процесса "вылета" из droppable (удаляем подсветку)
-        deleteItem({
-          // dropItemId: +droppableElem?.dataset.itemid,
-          // dropItemIndex: +droppableElem?.dataset.itemindex,
+        deletePlaceholder({
           dropColumnId: +currentDroppable.value.dataset.columnid,
           dropColumnIndex: +currentDroppable.value.dataset.columnindex,
-          // currColumnId: +currTodoItem.value.column,
-          // currColumnIndex: +currTodoItem.value.columnIndex,
-          // currItemId: +currTodoItem.value.dataset.itemid,
-          // currItemIndex: +currTodoEl.value.dataset.itemindex,
         })
-        // currentDroppable.value = null
       }
       currentDroppable.value = droppableArea
       // логика обработки процесса, когда мы "влетаем" в элемент droppable
@@ -134,7 +130,6 @@
             name: 'column',
           })
         }
-        //   enterDroppable(currentDroppable.value)
       }
     } else {
       if (droppableArea) {
@@ -157,13 +152,12 @@
   }
 
   const dragStop = e => {
-    console.log('dragstop')
+    let isMoved = mouseMove.value
     //Очистка всех значений до первоначальных
-    // Todo - сохранение позиции элемента после отжатия кнопки
     dragging.value = false
     mouseMove.value = false
 
-    if (currTodoEl.value && currTodoItem.value) {
+    if (isMoved && currTodoEl.value && currTodoItem.value) {
       if (
         columns.value[currTodoItem.value.columnIndex].items[
           currTodoEl.value.dataset.itemindex
@@ -201,8 +195,6 @@
       ),
       placeholder: true,
     }
-
-    console.log('placeHolderItem.value ', placeHolderItem.value)
 
     if (!placeHolderItem.value) {
       return
@@ -258,30 +250,64 @@
 
   const saveItem = item => {
     const phItem = placeHolderItem.value
+
+    let newEl = {
+      ...item,
+      id: item.itemId,
+    }
+
     if (phItem) {
-      const newEl = {
+      // replace placeholder item on current drag item, delete old position
+      newEl = {
         ...phItem,
-        id: item.id,
-        placeholder: false,
-        moving: false,
+        id: item.itemId,
       }
 
-      const index = store.columns[phItem.columnIndex].items.findIndex(
-        el => el.id === phItem.id
+      const plIndex = store.columns[phItem.columnIndex].items.findIndex(
+        el => el.placeholder
       )
+
+      let indexItem = store.columns[phItem.columnIndex].items.findIndex(
+        el => el.id === item.itemId
+      )
+
+      if (indexItem === -1) {
+        indexItem = item.itemIndex
+      }
+
       delete newEl.columnIndex
-      store.columns[phItem.columnIndex].items[index] = newEl
-      store.columns[item.columnIndex].items.splice(item.itemIndex, 1)
+      delete newEl.placeholder
+      delete newEl.moving
+
+      store.columns[phItem.columnIndex].items[plIndex] = { ...newEl }
+      nextTick(() => {
+        store.columns[item.columnIndex].items.splice(indexItem, 1)
+      })
+    } else {
+      // return to initial position
+      const findItem = store.columns[newEl.columnIndex].items.find(
+        el => el.id === newEl.itemId
+      )
+      store.columns[newEl.columnIndex].items[item.itemIndex] = findItem
     }
     placeHolderItem.value = null
+    currentDroppable.value = null
   }
 
-  const deleteItem = item => {
+  const deletePlaceholder = item => {
     const dropColumn = columns.value[item.dropColumnIndex]
 
     store.columns[item.dropColumnIndex].items = dropColumn.items.filter(
       todo => !todo.placeholder
     )
+
+    placeHolderItem.value = null
+    currentDroppable.value = null
+  }
+
+  const closeModal = () => {
+    console.log('qwe')
+    isModalTodoItem.value = false
   }
 </script>
 
@@ -292,17 +318,17 @@
       class="n-pl-16 n-pt-16 n-flex n-justify-start n-align-top n-wp-100 n-hp-100"
       :class="$style['todo-table__content']"
     >
-      <ToDoTableColumn
+      <TodoTableColumn
         v-for="(column, columnI) in columns"
         :key="column.id"
         :column="column"
         :index="columnI"
-        @delete-item="deleteItem($event)"
+        @delete-item="deletePlaceholder($event)"
         @add-item="addItem($event)"
         @save-item="saveItem($event)"
       >
         <template #content>
-          <ToDoTableColumnItem
+          <TodoTableColumnItem
             v-for="(item, itemI) in column.items"
             :key="item.id"
             :item="item"
@@ -312,11 +338,16 @@
             @click="clickItemUp($event)"
           >
             {{ item.id }}
-          </ToDoTableColumnItem>
+          </TodoTableColumnItem>
         </template>
-      </ToDoTableColumn>
+      </TodoTableColumn>
     </div>
     <div :class="$style['todo-table__sidebar']"></div>
+    <ModalTodoItem
+      v-if="isModalTodoItem"
+      :item="itemInfo"
+      @close="isModalTodoItem = false"
+    ></ModalTodoItem>
   </div>
 </template>
 
@@ -337,7 +368,7 @@
           width: 100%;
         }
         &__title {
-          color: var(--color-text-black);
+          color: var(--color-black-main);
           font-size: var(--size-14);
           font-weight: var(--font-weight-semibold);
         }

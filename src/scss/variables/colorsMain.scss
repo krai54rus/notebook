@@ -141,7 +141,7 @@
   --color-cyan-70: #d4faff;
   --color-cyan-80: #e3fcff;
   // blue
-  --color-blue-main: #0067a3;
+  // --color-blue-main: #0067a3;
   // --color-blue-main-hovered: opacity;
   // --color-blue-main-hovered: #0067a3c5;
   --color-blue-30: #044b73;
@@ -186,16 +186,17 @@
   --color-amaranth-80: #ffe8ec;
 
   // elements
-  --color-text-black: $color-text-black;
-  --color-btn-white: $color-text-white;
-  --color-btn-red: $color-text-red;
-  --color-btn-bgc-red: $color-text-red;
-  --color-btn-green: $color-text-green;
-  --color-btn-yellow: $color-text-yellow;
-  --color-btn-orange: $color-text-orange;
-  --color-btn-blue: $color-text-blue;
-  --color-btn-purple: $color-text-purple;
-  --color-btn-gray: $color-text-gray;
+  --color-black-main: #172b4d;
+  --color-white-main: #ffffff;
+  --color-red-main: #eb5a46;
+  --color-red-bgc-main: #ffcfcf;
+  --color-green-main: #61bd4f;
+  --color-yellow-main: #f2d600;
+  --color-orange-main: #ff9f1a;
+  --color-blue-main: #1976d2;
+  --color-purple-main: #c377e0;
+  --color-gray-main: #5e6c84;
+  --color-gray-bgc-main: #f4f5f7;
 
   --dynamic-background-color: hsl(206, 13.7%, 10%);
   --dynamic-icon-color: #ffffff;
