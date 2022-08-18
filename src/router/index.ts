@@ -3,6 +3,7 @@ import Main from '@/components/Main.vue'
 import About from '@/components/About.vue'
 import ToDo from '@/components/ToDo.vue'
 import Test from '@/components/Test.vue'
+import Components from '@/components/Components.vue'
 import TodoTablePage from '@/components/todo/TodoTablePage.vue'
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
     path: '/test',
     name: 'Test',
     component: Test,
+  },
+  {
+    path: '/components',
+    name: 'Components',
+    component: Components,
   },
   {
     path: '/todo/table/:id',

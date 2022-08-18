@@ -41,7 +41,7 @@
 
 <template>
   <div
-    class="n-p-4 n-mb-8 n-flex n-justify-start n-radius--full-sm"
+    class="n-p-4 n-mb-8 n-flex n-justify-space-between n-radius--full-sm"
     :class="{
       [$style['column-item']]: true,
       'column-drop-item': !item.moving,
@@ -56,6 +56,9 @@
   >
     <div>
       {{ item.placeholder ? '' : item.title }}
+    </div>
+    <div>
+      <nb-icon name="edit" />
     </div>
   </div>
 </template>
