@@ -57,7 +57,7 @@
     <div>
       {{ item.placeholder ? '' : item.title }}
     </div>
-    <div>
+    <div class="n-icon_sm">
       <nb-icon name="edit" />
     </div>
   </div>

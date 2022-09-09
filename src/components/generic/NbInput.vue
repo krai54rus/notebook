@@ -4,12 +4,12 @@
   type TInputType = 'regular' | 'outlined' | 'solo' | 'filled'
 
   interface Props {
-    value: string
+    value?: string
     label?: string
     type?: TInputType
     color?: string
-    placeholder: string
-    resize: boolean
+    placeholder?: string
+    resize?: boolean
   }
 
   const props = withDefaults(defineProps<Props>(), {
@@ -17,7 +17,7 @@
     label: '',
     type: 'solo',
     color: 'blue',
-    placeholder: 'Введите значение...',
+    placeholder: '',
     resize: false,
   })
 
@@ -31,18 +31,13 @@
   const handleChange = params => {
     emit('change', params)
   }
-
-  //   const emit = defineEmits<{
-  //   (e: 'change', id: number): void
-  //   (e: 'update', value: string): void
-  // }>()
 </script>
 <template>
   <div
     :class="{
       [$style['input']]: true,
-      [$style[`input-${type}`]]: true,
-      [$style['input-focused']]: isFocused,
+      [$style[`input_${type}`]]: true,
+      [$style['input_focused']]: isFocused,
     }"
     class="n-flex n-flex-column"
   >
@@ -58,11 +53,16 @@
     >
     <input
       ref="inputRef"
-      class="n-wp-100 n-p-8"
-      :class="$style['input__el']"
+      class="n-wp-100 n-px-8 = n-pb-8"
+      :class="{
+        [$style['input__el']]: true,
+        [$style[`input_${type}_focused`]]: true,
+        'n-pt-8': !label,
+        'n-pt-16': label,
+      }"
       id="inp"
       :value="value"
-      :placeholder="placeholder"
+      :placeholder="!label ? placeholder : ''"
       @focus="isFocused = true"
       @blur="isFocused = false"
       @input="handleInput($event)"
@@ -88,20 +88,23 @@
     // }
 
     &__el {
-      font-size: var(--size-14);
+      font-size: var(--size-16);
       border-radius: var(--radius-sm);
+      height: 56px;
     }
 
     &__label {
       position: absolute;
-      top: 10px;
+      top: 20px;
+      transition: 0.3s;
 
       &-top {
-        top: -20px;
+        top: 5px;
+        font-size: var(--size-12);
       }
     }
 
-    &-filled {
+    &_filled {
       border-bottom: 1px solid var(--color-black-main);
 
       & input {
@@ -109,24 +112,34 @@
       }
     }
 
-    &-solo {
+    &_solo {
       box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
         0 1px 5px 0 rgb(0 0 0 / 12%);
+
+      &_focused {
+        border-bottom: 1px solid var(--color-blue-main);
+        & input {
+          border-left: none;
+          border-top: none;
+          border-right: none;
+        }
+      }
     }
 
-    &-outlined {
+    &_outlined {
       border: 1px solid var(--color-gray-main);
     }
 
-    &-regular {
+    &_regular {
       border-bottom: 1px solid var(--color-black-main);
+      &_focused {
+        border-bottom: 1px solid var(--color-blue-main);
+        & input {
+          border-left: none;
+          border-top: none;
+          border-right: none;
+        }
+      }
     }
-
-    &-focused {
-      border: 1px solid var(--color-blue-main);
-    }
-    // height: 90px;
-    // margin: -1px;
-    // padding: 0;
   }
 </style>
