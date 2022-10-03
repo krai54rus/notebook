@@ -24,11 +24,11 @@
   const emit = defineEmits(['input', 'change'])
   const inputRef = ref('inputRef')
   const isFocused = ref(false)
-  const handleInput = params => {
+  const handleInput = (params: any) => {
     emit('input', params)
   }
 
-  const handleChange = params => {
+  const handleChange = (params: any) => {
     emit('change', params)
   }
 </script>

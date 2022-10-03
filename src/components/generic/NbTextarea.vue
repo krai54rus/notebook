@@ -5,20 +5,26 @@
     value?: string
     placeholder?: string
     resize?: boolean
+    label?: string
+    type?: string
   }
 
   const props = withDefaults(defineProps<Props>(), {
     value: '',
     placeholder: '',
     resize: false,
+    label: '',
+    type: '',
   })
 
+  const isFocused = ref(false)
+
   const emit = defineEmits(['input', 'change'])
-  const handleInput = params => {
+  const handleInput = (params: any) => {
     emit('input', params)
   }
 
-  const handleChange = params => {
+  const handleChange = (params: any) => {
     emit('change', params)
   }
 

@@ -16,13 +16,13 @@
   const className = 'modalbox'
 
   const emit = defineEmits(['close', 'change'])
-  const handleClose = params => {
-    emit('close', params)
-  }
+  // const handleClose = params => {
+  //   emit('close', params)
+  // }
 
-  const handleChange = params => {
-    emit('change', params)
-  }
+  // const handleChange = params => {
+  //   emit('change', params)
+  // }
 </script>
 <template>
   <div

@@ -19,9 +19,13 @@
   }
 
   withDefaults(defineProps<Props>(), {
-    column: TodoColumnModel.create(),
+    column: () => TodoColumnModel.create(),
     index: 0,
   })
+
+  const addCard = () => {
+    console.log('addCard func')
+  }
 </script>
 
 <template>

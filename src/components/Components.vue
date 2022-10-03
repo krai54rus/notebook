@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-  import WidgetBlock from './main/WidgetBlock.vue'
   import { computed } from 'vue'
   import { useTestStore } from '@/pinia/test'
 
   const store = useTestStore()
-  store.loaditems('module/loaditems')
+  store.loaditems()
   const data = computed(() => store.items)
 </script>
 <template>

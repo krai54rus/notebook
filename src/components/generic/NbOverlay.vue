@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   const emit = defineEmits(['close'])
-  const handleClose = params => {
-    emit('close', params)
+  const handleClose = () => {
+    emit('close')
   }
 </script>
 <template>

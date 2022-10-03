@@ -14,13 +14,13 @@
     columnIndex: 0,
   })
 
+  const isEdit = ref(false)
   const elem = ref(null)
   const emit = defineEmits(['drag-start', 'click'])
 
-  const handleDragStart = e => {
+  const handleDragStart = (e: { preventDefault: () => void }) => {
     e.preventDefault()
     emit('drag-start', {
-      e,
       item: props.item,
       index: props.index,
       columnIndex: props.columnIndex,
@@ -28,7 +28,11 @@
     })
   }
 
-  const handleClickUp = e => {
+  const editClick = () => {
+    console.log('edit click')
+    isEdit.value = true
+  }
+  const handleClickUp = (e: any) => {
     emit('click', {
       e,
       item: props.item,
@@ -54,11 +58,20 @@
     @mousedown="handleDragStart($event)"
     @mouseup="handleClickUp($event)"
   >
-    <div>
-      {{ item.placeholder ? '' : item.title }}
+    <div v-if="!isEdit" class="n-flex">
+      <div>
+        {{ item.placeholder ? '' : item.title }}
+      </div>
+      <div
+        class="n-icon_sm"
+        :class="$style['column-item__icon-edit']"
+        @click="editClick()"
+      >
+        <nb-icon name="edit" />
+      </div>
     </div>
-    <div class="n-icon_sm">
-      <nb-icon name="edit" />
+    <div v-else class="">
+      <nb-textarea :value="item.title"></nb-textarea>
     </div>
   </div>
 </template>
@@ -81,6 +94,12 @@
     &_placeholder {
       background-color: var(--gainsboro);
       height: 24px;
+    }
+
+    &__icon-edit {
+      :hover {
+        background-color: var(--color-gray-main);
+      }
     }
   }
 </style>

@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
+import { ITodoColumn } from '@/entities/todo/TodoColumnTypes'
 import api, { errorHandler } from '@/api'
 
 export type RootState = {
-  columns: IToDoColumn[]
+  columns: ITodoColumn[]
 }
 
 export const useToDoStore = defineStore('toDo', {

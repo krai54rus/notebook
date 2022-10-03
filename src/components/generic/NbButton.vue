@@ -22,8 +22,8 @@
   })
 
   const emit = defineEmits(['click'])
-  const handleClick = params => {
-    emit('click', params)
+  const handleClick = () => {
+    emit('click')
   }
 
   //   const emit = defineEmits<{

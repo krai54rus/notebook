@@ -10,7 +10,7 @@ const empty = (): ITodoColumn => {
 }
 
 export default class TodoColumnModel {
-  static create(): ITodoColumn {
+  static create() {
     return empty()
   }
 }
