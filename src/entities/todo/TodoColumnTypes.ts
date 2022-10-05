@@ -2,7 +2,7 @@ export interface ITodoItem {
   id: string
   title: string
   description: string
-  // placeholder?: boolean
+  placeholder?: boolean
   column: number
   dateCreate: string
 }

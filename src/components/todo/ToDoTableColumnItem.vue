@@ -21,10 +21,13 @@
   const handleDragStart = (e: { preventDefault: () => void }) => {
     e.preventDefault()
     emit('drag-start', {
-      item: props.item,
-      index: props.index,
-      columnIndex: props.columnIndex,
-      elem: elem.value,
+      e,
+      dragItem: {
+        item: props.item,
+        index: props.index,
+        columnIndex: props.columnIndex,
+        elem: elem.value,
+      },
     })
   }
 

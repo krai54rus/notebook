@@ -38,8 +38,13 @@
     document.addEventListener('mouseup', dragStop)
   })
 
-  // @ts-ignore
-  const dragStart = (e: DragEvent, dragItem: ITodoDragItem) => {
+  const dragStart = ({
+    e,
+    dragItem,
+  }: {
+    e: DragEvent
+    dragItem: ITodoDragItem
+  }) => {
     e.preventDefault()
 
     console.log('dragevent ', e)
@@ -121,7 +126,9 @@
       if (currentDroppable.value) {
         // логика обработки процесса "вылета" из droppable (удаляем подсветку)
         deletePlaceholder({
+          // @ts-ignore
           dropColumnId: +currentDroppable.value.dataset.columnid,
+          // @ts-ignore
           dropColumnIndex: +currentDroppable.value.dataset.columnindex,
         })
       }
@@ -199,9 +206,9 @@
       currTodoEl.value.style.display = 'flex'
       currTodoEl.value.style.zIndex = '10'
       saveItem({
-        itemId: +currTodoItem.value.id,
+        itemId: +currTodoItem.value.item.id,
         itemIndex: +currTodoItem.value?.index,
-        columnId: +currTodoItem.value?.column,
+        columnId: +currTodoItem.value?.item.column,
         columnIndex: +currTodoItem.value?.columnIndex,
       })
     }
@@ -223,13 +230,20 @@
     const dropItemIndex = +params.droppableElem.dataset.itemindex
     const dropColumnId = +params.droppableArea.dataset.columnid
     const dropColumnIndex = +params.droppableArea.dataset.columnindex
-    const currColumnId = +currTodoItem.value?.column
-    const currColumnIndex = +currTodoItem.value?.columnIndex
-    const currItemId = +currTodoItem.value?.id
-    const currItemIndex = +currTodoEl.value?.dataset?.itemindex
+
+    let currColumnId = 0
+    let currColumnIndex = 0
+    let currItemId = 0
+
+    if (currTodoItem.value) {
+      currColumnId = +currTodoItem.value?.item.column
+      currColumnIndex = +currTodoItem.value?.columnIndex
+      currItemId = +currTodoItem.value?.item.id
+    }
+    const currItemIndex = currTodoEl.value?.dataset.itemindex
 
     const finder = columns.value[currColumnIndex].items.find(
-      (todoItem: { id: any }) => todoItem.id === currItemId
+      todoItem => +todoItem.id === currItemId
     )
 
     // if (finder) {
@@ -247,16 +261,19 @@
     const dropColumn = columns.value[dropColumnIndex]
     const isPlaceholder = dropColumn.items.find(todo => todo.placeholder)
 
-    if (!isPlaceholder) {
+    if (!isPlaceholder && finder) {
       placeHolderItem.value = {
         ...finder,
         placeholder: true,
+        // @ts-ignore
         id: +finder.id * 1000,
         column: dropColumnId,
         columnIndex: dropColumnIndex,
       }
+
+      // @ts-ignore
       if (dropName && dropName === 'column' && placeHolderItem.value) {
-        dropColumn.items.push(placeHolderItem.value)
+        dropColumn.items.push(placeHolderItem.value.item)
       } else {
         const dropElem = {
           ...dropColumn.items[dropItemIndex],
@@ -264,12 +281,15 @@
 
         placeHolderItem.value = {
           ...finder,
+          // @ts-ignore
           id: +finder.id * 1000,
           column: dropColumnId,
           columnIndex: dropColumnIndex,
         }
 
-        dropColumn.items.splice(dropItemIndex, 0, placeHolderItem.value)
+        if (placeHolderItem.value) {
+          dropColumn.items.splice(dropItemIndex, 0, placeHolderItem.value.item)
+        }
       }
     } else {
       if (
@@ -282,13 +302,16 @@
 
         placeHolderItem.value = {
           ...placeHolderItem.value,
+          // @ts-ignore
           id: +finder.id * 1000,
           placeholder: true,
           column: dropColumnId,
           columnIndex: dropColumnIndex,
         }
 
-        dropColumn.items.splice(dropItemIndex, 0, placeHolderItem.value)
+        if (placeHolderItem.value) {
+          dropColumn.items.splice(dropItemIndex, 0, placeHolderItem.value.item)
+        }
       }
     }
   }
@@ -308,17 +331,18 @@
 
     if (phItem) {
       // replace placeholder item on current drag item, delete old position
+      // @ts-ignore
       newEl = {
-        ...phItem,
+        ...phItem.item,
         id: item.itemId,
       }
 
       const plIndex = store.columns[phItem.columnIndex].items.findIndex(
-        (el: { placeholder: any }) => el.placeholder
+        el => el.placeholder
       )
 
       let indexItem = store.columns[phItem.columnIndex].items.findIndex(
-        (el: { id: any }) => el.id === item.itemId
+        el => el.id === item.itemId
       )
 
       if (indexItem === -1) {
@@ -326,9 +350,11 @@
       }
 
       delete newEl.columnIndex
+      // @ts-ignore
       delete newEl.placeholder
       // delete newEl.moving
 
+      // @ts-ignore
       store.columns[phItem.columnIndex].items[plIndex] = { ...newEl }
       nextTick(() => {
         store.columns[item.columnIndex].items.splice(indexItem, 1)
@@ -338,6 +364,8 @@
       const findItem = store.columns[newEl.columnIndex].items.find(
         (el: { id: any }) => el.id === newEl.itemId
       )
+
+      // @ts-ignore
       store.columns[newEl.columnIndex].items[item.itemIndex] = findItem
     }
     placeHolderItem.value = null
