@@ -3,6 +3,7 @@ import Main from '@/components/Main.vue'
 import About from '@/components/About.vue'
 import ToDo from '@/components/ToDo.vue'
 import Test from '@/components/Test.vue'
+import TestColor from '@/components/TestColor.vue'
 import Components from '@/components/Components.vue'
 import TodoTablePage from '@/components/todo/TodoTablePage.vue'
 
@@ -16,6 +17,11 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About,
+  },
+  {
+    path: '/testcolor',
+    name: 'TestColor',
+    component: TestColor,
   },
   {
     path: '/todo',
