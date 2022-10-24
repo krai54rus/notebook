@@ -6,12 +6,18 @@
 
   const items = ref([])
   onMounted(async () => {
-    const res = await api('https://jsonplaceholder.typicode.com/users', 'GET')
-    items.value = res.data
+    const res: any = await api(
+      'https://jsonplaceholder.typicode.com/users',
+      'GET'
+    )
+    if (res && res.data) {
+      items.value = res.data
+    }
+
     console.log(res)
   })
   const data = computed(() => items)
-  provide('data', item.value)
+  provide('data', items.value)
 </script>
 <template>
   <div class="n-flex n-wp-100 n-hp-100" :class="$style['main']">
