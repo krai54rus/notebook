@@ -1,5 +1,7 @@
 <script lang="ts" setup>
   import { ref, computed } from 'vue'
+
+  // @ts-ignore
   import * as icons from './icons.js'
 
   interface Props {
@@ -13,8 +15,8 @@
   const currIcon = computed(() => icons[props.name])
 
   const emit = defineEmits(['click'])
-  const handleClick = params => {
-    emit('click', params)
+  const handleClick = () => {
+    emit('click')
   }
 </script>
 <template>

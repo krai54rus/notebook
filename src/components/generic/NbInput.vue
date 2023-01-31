@@ -1,25 +1,29 @@
 <script lang="ts" setup>
   import { ref } from 'vue'
 
+  type TInputType = 'regular' | 'outlined' | 'solo' | 'filled'
+
   interface Props {
     value?: string
+    label?: string
+    type?: TInputType
+    color?: string
     placeholder?: string
     resize?: boolean
-    label?: string
-    type?: string
   }
 
   const props = withDefaults(defineProps<Props>(), {
     value: '',
+    label: '',
+    type: 'solo',
+    color: 'blue',
     placeholder: '',
     resize: false,
-    label: '',
-    type: '',
   })
 
-  const isFocused = ref(false)
-
   const emit = defineEmits(['input', 'change'])
+  const inputRef = ref('inputRef')
+  const isFocused = ref(false)
   const handleInput = (params: any) => {
     emit('input', params)
   }
@@ -27,18 +31,13 @@
   const handleChange = (params: any) => {
     emit('change', params)
   }
-
-  //   const emit = defineEmits<{
-  //   (e: 'change', id: number): void
-  //   (e: 'update', value: string): void
-  // }>()
 </script>
 <template>
   <div
     :class="{
-      [$style['textarea']]: true,
-      [$style[`textarea_${type}`]]: true,
-      [$style['textarea_focused']]: isFocused,
+      [$style['input']]: true,
+      [$style[`input_${type}`]]: true,
+      [$style['input_focused']]: isFocused,
     }"
     class="n-flex n-flex-column"
   >
@@ -47,33 +46,46 @@
       for="inp"
       class="n-pl-8"
       :class="{
-        [$style['textarea__label']]: true,
-        [$style['textarea__label-top']]: isFocused || value !== '',
+        [$style['input__label']]: true,
+        [$style['input__label-top']]: isFocused || value !== '',
       }"
       >{{ label }}</label
     >
-    <textarea
-      :class="$style['textarea__el']"
+    <input
+      ref="inputRef"
+      class="n-wp-100 n-px-8 = n-pb-8"
+      :class="{
+        [$style['input__el']]: true,
+        [$style[`input_${type}_focused`]]: true,
+        'n-pt-8': !label,
+        'n-pt-16': label,
+      }"
+      id="inp"
       :value="value"
-      :placeholder="placeholder"
-      :resize="resize"
-    ></textarea>
+      :placeholder="!label ? placeholder : ''"
+      @focus="isFocused = true"
+      @blur="isFocused = false"
+      @input="handleInput($event)"
+      @change="handleChange($event)"
+    />
   </div>
 </template>
 
 <style lang="scss" module>
-  $component: textarea;
+  $component: input;
 
   .#{$component} {
-    overflow: hidden;
+    // overflow: hidden;
     overflow-wrap: break-word;
     background-color: initial;
     box-shadow: none;
-    height: 90px;
-    margin: -1px;
-    padding: 0;
+    border-radius: var(--radius-sm);
     border: 1px solid transparent;
     position: relative;
+
+    // &__wrapper {
+    //   font-size: var(--size-14);
+    // }
 
     &__el {
       font-size: var(--size-16);

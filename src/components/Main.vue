@@ -4,7 +4,7 @@
   import { useTestStore } from '@/pinia/test'
 
   const store = useTestStore()
-  store.loaditems('module/loaditems')
+  store.loaditems()
   const data = computed(() => store.items)
 </script>
 <template>

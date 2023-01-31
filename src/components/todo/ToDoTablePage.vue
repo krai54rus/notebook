@@ -5,19 +5,31 @@
   import TodoTableColumnItem from './TodoTableColumnItem.vue'
   import ModalTodoItem from './ModalTodoItem.vue'
   import plusSvg from '@/assets/icons/plus.svg?raw'
+  import { ITodoItem } from '@/entities/todo/TodoColumnTypes'
+
+  interface ITodoDragItem {
+    // column?: number
+    // columnIndex?: number
+    // index?: number
+    item: ITodoItem
+    index: number
+    columnIndex: number
+    elem?: any
+    placeholder?: boolean
+  }
 
   const store = useToDoStore()
   const columns = computed(() => store.columns)
   store.loadColumns()
 
-  const placeHolderItem = ref(null)
+  const placeHolderItem = ref<ITodoDragItem | null>(null)
   let dragging = ref(false)
   let mouseMove = ref(false)
   let isModalTodoItem = ref(false)
   const itemInfo = ref(null)
-  const currTodoEl = ref(null)
-  const currTodoItem = ref(null)
-  const currentDroppable = ref(null)
+  const currTodoEl = ref<HTMLDivElement | null>(null)
+  const currTodoItem = ref<ITodoDragItem | null>(null)
+  const currentDroppable = ref<Element | null>(null)
   const startCoords = ref({ x: 0, y: 0 })
   const indent = ref({ x: 0, y: 0 })
 
@@ -26,26 +38,35 @@
     document.addEventListener('mouseup', dragStop)
   })
 
-  const dragStart = ({ e, item, index, elem, columnIndex }) => {
+  const dragStart = ({
+    e,
+    dragItem,
+  }: {
+    e: DragEvent
+    dragItem: ITodoDragItem
+  }) => {
     e.preventDefault()
-    if (elem) {
+
+    console.log('dragevent ', e)
+    console.log('dragItem ', dragItem)
+    if (dragItem && dragItem.elem) {
       dragging.value = true
-      currTodoEl.value = elem
+      currTodoEl.value = dragItem.elem
       currTodoItem.value = {
-        ...item,
-        columnIndex,
-        index,
+        item: dragItem.item,
+        columnIndex: dragItem.columnIndex,
+        index: dragItem.index,
       }
-      const coordsElem = elem.getBoundingClientRect()
+      const coordsElem = dragItem.elem.getBoundingClientRect()
       startCoords.value.x = e.clientX
       startCoords.value.y = e.clientY
       indent.value.x = e.clientX - coordsElem.left
       indent.value.y = e.clientY - coordsElem.top
-      columns.value[columnIndex].items[index].moving = true
+      // columns.value[columnIndex].items[index].moving = true
     }
   }
 
-  const onDrag = event => {
+  const onDrag = (event: any) => {
     if (dragging.value) {
       mouseMove.value = true
       elemMoving(event)
@@ -53,10 +74,10 @@
     }
   }
 
-  const clickItemUp = ({ e, item, index, elem, columnIndex }) => {
+  const clickItemUp = ({ item }: any) => {
     if (mouseMove.value) {
       // console.log('clickItemUp mouseMove ', mouseMove.value)
-      dragStop(e)
+      dragStop()
     } else {
       itemInfo.value = item
       isModalTodoItem.value = true
@@ -64,22 +85,29 @@
     }
   }
 
-  const elemMoving = event => {
+  const elemMoving = (event: any) => {
     const { clientX, clientY } = event.changedTouches
       ? event.changedTouches[0]
       : event
-    const coordsElem = currTodoEl.value.getBoundingClientRect()
-    currTodoEl.value.style.top = `${clientY - indent.value.y}px`
-    currTodoEl.value.style.left = `${clientX - indent.value.x}px`
+
+    if (currTodoEl.value) {
+      const coordsElem = currTodoEl.value.getBoundingClientRect()
+      currTodoEl.value.style.top = `${clientY - indent.value.y}px`
+      currTodoEl.value.style.left = `${clientX - indent.value.x}px`
+    }
   }
 
-  const intersectObs = event => {
-    currTodoEl.value.style.display = 'none'
-    // Делаем невидимым элемент, чтобы узнать какой элемент находится под курсором
-    let elemBelow = document.elementFromPoint(event.clientX, event.clientY)
-    currTodoEl.value.style.position = 'absolute'
-    currTodoEl.value.style.zIndex = '1000'
-    currTodoEl.value.style.display = 'flex'
+  const intersectObs = (event: any) => {
+    let elemBelow = null
+
+    if (currTodoEl.value) {
+      currTodoEl.value.style.display = 'none'
+      // Делаем невидимым элемент, чтобы узнать какой элемент находится под курсором
+      elemBelow = document.elementFromPoint(event.clientX, event.clientY)
+      currTodoEl.value.style.position = 'absolute'
+      currTodoEl.value.style.zIndex = '1000'
+      currTodoEl.value.style.display = 'flex'
+    }
 
     if (!elemBelow) return
 
@@ -98,7 +126,9 @@
       if (currentDroppable.value) {
         // логика обработки процесса "вылета" из droppable (удаляем подсветку)
         deletePlaceholder({
+          // @ts-ignore
           dropColumnId: +currentDroppable.value.dataset.columnid,
+          // @ts-ignore
           dropColumnIndex: +currentDroppable.value.dataset.columnindex,
         })
       }
@@ -106,28 +136,29 @@
       // логика обработки процесса, когда мы "влетаем" в элемент droppable
       if (currentDroppable.value) {
         // Пересечение с элементом
-        if (droppableArea && droppableElem) {
+        if (droppableArea && droppableElem && currTodoItem.value) {
           addItem({
-            dropItemId: +droppableElem.dataset.itemid,
-            dropItemIndex: +droppableElem.dataset.itemindex,
-            dropColumnId: +droppableArea.dataset.columnid,
-            dropColumnIndex: +droppableArea.dataset.columnindex,
-            currColumnId: +currTodoItem.value.column,
-            currColumnIndex: +currTodoItem.value.columnIndex,
-            currItemId: +currTodoItem.value.id,
-            currItemIndex: +currTodoEl.value.dataset.itemindex,
+            droppableElem,
+            droppableArea,
+            // dropColumnId: +droppableArea.dataset.columnid,
+            // dropColumnIndex: +droppableArea.dataset.columnindex,
+            // currColumnId: +currTodoItem.value.column,
+            // currColumnIndex: +currTodoItem.value.columnIndex,
+            // currItemId: +currTodoItem.value.id,
+            // currItemIndex: +currTodoEl.value?.dataset?.itemindex,
           })
         }
         // Пересечение только с таблицей
         if (droppableArea && droppableElem === null) {
           addItem({
-            dropColumnId: +droppableArea.dataset.columnid,
-            dropColumnIndex: +droppableArea.dataset.columnindex,
-            currColumnId: +currTodoItem.value.column,
-            currColumnIndex: +currTodoItem.value.columnIndex,
-            currItemId: +currTodoItem.value.id,
-            currItemIndex: +currTodoEl.value.dataset.itemindex,
-            name: 'column',
+            droppableArea,
+            // dropColumnId: +droppableArea.dataset.columnid,
+            // dropColumnIndex: +droppableArea.dataset.columnindex,
+            // currColumnId: +currTodoItem.value.column,
+            // currColumnIndex: +currTodoItem.value.columnIndex,
+            // currItemId: +currTodoItem.value.id,
+            // currItemIndex: +currTodoEl.value.dataset.itemindex,
+            dropName: 'column',
           })
         }
       }
@@ -137,46 +168,48 @@
         // Пересечение с элементом
         if (droppableElem) {
           addItem({
-            dropItemId: +droppableElem.dataset.itemid,
-            dropItemIndex: +droppableElem.dataset.itemindex,
-            dropColumnId: +droppableArea.dataset.columnid,
-            dropColumnIndex: +droppableArea.dataset.columnindex,
-            currColumnId: +currTodoItem.value.column,
-            currColumnIndex: +currTodoItem.value.columnIndex,
-            currItemId: +currTodoItem.value.id,
-            currItemIndex: +currTodoEl.value.dataset.itemindex,
+            droppableElem,
+            droppableArea,
+            // dropItemId: +droppableElem.dataset.itemid,
+            // dropItemIndex: +droppableElem.dataset.itemindex,
+            // dropColumnId: +droppableArea.dataset.columnid,
+            // dropColumnIndex: +droppableArea.dataset.columnindex,
+            // currColumnId: +currTodoItem.value.column,
+            // currColumnIndex: +currTodoItem.value.columnIndex,
+            // currItemId: +currTodoItem.value.id,
+            // currItemIndex: +currTodoEl.value.dataset.itemindex,
           })
         }
       }
     }
   }
 
-  const dragStop = e => {
+  const dragStop = () => {
     let isMoved = mouseMove.value
     //Очистка всех значений до первоначальных
     dragging.value = false
     mouseMove.value = false
 
     if (isMoved && currTodoEl.value && currTodoItem.value) {
-      if (
-        columns.value[currTodoItem.value.columnIndex].items[
-          currTodoEl.value.dataset.itemindex
-        ]
-      ) {
-        columns.value[currTodoItem.value.columnIndex].items[
-          currTodoEl.value.dataset.itemindex
-        ].moving = false
-      }
+      // if (
+      //   columns.value[currTodoItem.value.columnIndex].items[
+      //     currTodoEl.value.dataset.itemindex
+      //   ]
+      // ) {
+      //   columns.value[currTodoItem.value.columnIndex].items[
+      //     currTodoEl.value.dataset.itemindex
+      //   ].moving = false
+      // }
       currTodoEl.value.style.top = `auto`
       currTodoEl.value.style.left = `auto`
       currTodoEl.value.style.position = 'relative'
       currTodoEl.value.style.display = 'flex'
       currTodoEl.value.style.zIndex = '10'
       saveItem({
-        itemId: +currTodoItem.value.id,
-        itemIndex: +currTodoItem.value.index,
-        columnId: +currTodoItem.value.column,
-        columnIndex: +currTodoItem.value.columnIndex,
+        itemId: +currTodoItem.value.item.id,
+        itemIndex: +currTodoItem.value?.index,
+        columnId: +currTodoItem.value?.item.column,
+        columnIndex: +currTodoItem.value?.columnIndex,
       })
     }
 
@@ -188,67 +221,107 @@
     indent.value.y = 0
   }
 
-  const addItem = item => {
-    placeHolderItem.value = {
-      ...columns.value[item.currColumnIndex].items.find(
-        todoItem => todoItem.id === item.currItemId
-      ),
-      placeholder: true,
-    }
+  const addItem = (params: {
+    droppableElem?: any
+    droppableArea?: any
+    dropName?: string
+  }) => {
+    const dropItemId = +params.droppableElem.dataset.itemid
+    const dropItemIndex = +params.droppableElem.dataset.itemindex
+    const dropColumnId = +params.droppableArea.dataset.columnid
+    const dropColumnIndex = +params.droppableArea.dataset.columnindex
 
-    if (!placeHolderItem.value) {
+    let currColumnId = 0
+    let currColumnIndex = 0
+    let currItemId = 0
+
+    if (currTodoItem.value) {
+      currColumnId = +currTodoItem.value?.item.column
+      currColumnIndex = +currTodoItem.value?.columnIndex
+      currItemId = +currTodoItem.value?.item.id
+    }
+    const currItemIndex = currTodoEl.value?.dataset.itemindex
+
+    const finder = columns.value[currColumnIndex].items.find(
+      todoItem => +todoItem.id === currItemId
+    )
+
+    // if (finder) {
+    //   placeHolderItem.value = {
+    //     ...finder,
+    //     placeholder: true,
+    //   }
+    // }
+
+    // if (!placeHolderItem.value) {
+    if (!finder) {
       return
     }
 
-    const dropColumn = columns.value[item.dropColumnIndex]
+    const dropColumn = columns.value[dropColumnIndex]
     const isPlaceholder = dropColumn.items.find(todo => todo.placeholder)
 
-    if (!isPlaceholder) {
+    if (!isPlaceholder && finder) {
       placeHolderItem.value = {
-        ...placeHolderItem.value,
-        id: placeHolderItem.value.id * 1000,
-        column: item.dropColumnId,
-        columnIndex: item.dropColumnIndex,
+        ...finder,
+        placeholder: true,
+        // @ts-ignore
+        id: +finder.id * 1000,
+        column: dropColumnId,
+        columnIndex: dropColumnIndex,
       }
-      if (item.name === 'column') {
-        dropColumn.items.push(placeHolderItem.value)
+
+      // @ts-ignore
+      if (dropName && dropName === 'column' && placeHolderItem.value) {
+        dropColumn.items.push(placeHolderItem.value.item)
       } else {
         const dropElem = {
-          ...dropColumn.items[item.dropItemIndex],
+          ...dropColumn.items[dropItemIndex],
         }
 
         placeHolderItem.value = {
-          ...placeHolderItem.value,
-          id: placeHolderItem.value.id * 1000,
-          column: item.dropColumnId,
-          columnIndex: item.dropColumnIndex,
+          ...finder,
+          // @ts-ignore
+          id: +finder.id * 1000,
+          column: dropColumnId,
+          columnIndex: dropColumnIndex,
         }
 
-        dropColumn.items.splice(item.dropItemIndex, 0, placeHolderItem.value)
+        if (placeHolderItem.value) {
+          dropColumn.items.splice(dropItemIndex, 0, placeHolderItem.value.item)
+        }
       }
     } else {
       if (
-        !dropColumn.items[item.dropItemIndex] ||
-        !dropColumn.items[item.dropItemIndex].placeholder
+        !dropColumn.items[dropItemIndex] ||
+        !dropColumn.items[dropItemIndex].placeholder
       ) {
-        store.columns[item.dropColumnIndex].items = dropColumn.items.filter(
+        store.columns[dropColumnIndex].items = dropColumn.items.filter(
           todo => !todo.placeholder
         )
 
         placeHolderItem.value = {
           ...placeHolderItem.value,
-          id: placeHolderItem.value.id * 1000,
+          // @ts-ignore
+          id: +finder.id * 1000,
           placeholder: true,
-          column: item.dropColumnId,
-          columnIndex: item.dropColumnIndex,
+          column: dropColumnId,
+          columnIndex: dropColumnIndex,
         }
 
-        dropColumn.items.splice(item.dropItemIndex, 0, placeHolderItem.value)
+        if (placeHolderItem.value) {
+          dropColumn.items.splice(dropItemIndex, 0, placeHolderItem.value.item)
+        }
       }
     }
   }
 
-  const saveItem = item => {
+  const saveItem = (item: {
+    itemId: any
+    itemIndex: any
+    columnId?: number
+    columnIndex: any
+  }) => {
     const phItem = placeHolderItem.value
 
     let newEl = {
@@ -258,8 +331,9 @@
 
     if (phItem) {
       // replace placeholder item on current drag item, delete old position
+      // @ts-ignore
       newEl = {
-        ...phItem,
+        ...phItem.item,
         id: item.itemId,
       }
 
@@ -276,9 +350,11 @@
       }
 
       delete newEl.columnIndex
+      // @ts-ignore
       delete newEl.placeholder
-      delete newEl.moving
+      // delete newEl.moving
 
+      // @ts-ignore
       store.columns[phItem.columnIndex].items[plIndex] = { ...newEl }
       nextTick(() => {
         store.columns[item.columnIndex].items.splice(indexItem, 1)
@@ -286,15 +362,20 @@
     } else {
       // return to initial position
       const findItem = store.columns[newEl.columnIndex].items.find(
-        el => el.id === newEl.itemId
+        (el: { id: any }) => el.id === newEl.itemId
       )
+
+      // @ts-ignore
       store.columns[newEl.columnIndex].items[item.itemIndex] = findItem
     }
     placeHolderItem.value = null
     currentDroppable.value = null
   }
 
-  const deletePlaceholder = item => {
+  const deletePlaceholder = (item: {
+    dropColumnId?: number
+    dropColumnIndex: any
+  }) => {
     const dropColumn = columns.value[item.dropColumnIndex]
 
     store.columns[item.dropColumnIndex].items = dropColumn.items.filter(
