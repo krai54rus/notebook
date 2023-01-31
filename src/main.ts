@@ -1,8 +1,16 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from '@/router/index'
 import store from '@/store/index'
+import regGlobalComponents from './plugins/global-components'
 import '@/scss/styles.scss'
 import '@/assets/css/classes.css'
 
-createApp(App).use(router).use(store).mount('#app')
+const pinia = createPinia()
+
+const app = createApp(App)
+
+regGlobalComponents(app)
+
+app.use(router).use(pinia).use(store).mount('#app')

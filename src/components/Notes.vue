@@ -1,22 +1,22 @@
 <script lang="ts" setup>
-  import ToDoTableItem from './todo/ToDoTableItem.vue'
+  import NoteItem from './note/NoteItem.vue'
   import { computed } from 'vue'
-  import { useStore } from 'vuex'
+  import { useNoteStore } from '@/pinia/notes'
 
-  const store = useStore()
-  store.dispatch('module/loaditems')
-  const data = computed(() => store.state.module.items)
+  const store = useNoteStore()
+  const notes = computed(() => store.notes)
+  store.loadNotes()
 </script>
 <template>
-  <div class="n-wp-100 n-hp-100" :class="$style['todo']">
-    <div class="n-wp-100 n-hp-100" :class="$style['todo-wrapper']">
+  <div class="n-wp-100 n-hp-100" :class="$style['notes']">
+    <div class="n-wp-100 n-hp-100" :class="$style['notes-wrapper']">
       <nb-toolbar title="ToDo"></nb-toolbar>
       <div
         class="n-wp-100 n-py-16 n-flex n-justify-center n-alignt-center"
-        :class="$style['todo__list']"
+        :class="$style['notes__list']"
       >
-        <ToDoTableItem
-          v-for="(item, index) in data"
+        <NoteItem
+          v-for="(item, index) in notes"
           :key="index"
           title="ToDo"
           :item="item"
@@ -27,7 +27,7 @@
 </template>
 
 <style lang="scss" module>
-  $component: todo;
+  $component: notes;
 
   .#{$component} {
     &__list {

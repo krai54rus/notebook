@@ -1,0 +1,227 @@
+@function hextorgb($hex) {
+  @return red($hex), green($hex), blue($hex);
+}
+
+:root {
+  --color-white: #fff;
+  --color-white-hovered: #f4f5f7;
+  --color-white-rgb: #{hextorgb(#fff)};
+  --color-black: #2c323a;
+  --color-black-rgb: #{hextorgb(#2c323a)};
+  --color-dark: #173456;
+  --color-dark-rgb: #{hextorgb(#173456)};
+  --color-accent: #184f90;
+  --color-accent-rgb: #{hextorgb(#184f90)};
+  --color-hover: #17b6dc;
+  --color-hover-rgb: #{hextorgb(#17b6dc)};
+  // shadow
+  --color-shadow: #0a3d80;
+  --color-shadow-rgb: #{hextorgb(#0a3d80)};
+
+  // gray
+  --color-gray-30: #e0e0e0;
+  --color-gray-40: #bdbdbd;
+  --color-gray-50: #9e9e9e;
+  --color-gray-60: #757575;
+  --color-gray-70: #616161;
+  --color-gray-80: #424242;
+  --color-gray-90: #212121;
+  // gray-blue
+  --color-gray-blue-05: #eceff1;
+  --color-gray-blue-10: #cfd8dc;
+  --color-gray-blue-20: #b0bec5;
+  --color-gray-blue-30: #90a4ae;
+  --color-gray-blue-40: #78909c;
+  --color-gray-blue-50: #607d8b;
+  --color-gray-blue-60: #546e7a;
+  --color-gray-blue-70: #455a64;
+  --color-gray-blue-80: #37474f;
+  --color-gray-blue-90: #263238;
+  // red
+  --color-red-05: #ffebee;
+  --color-red-10: #ffcdd2;
+  --color-red-20: #ef9a9a;
+  --color-red-30: #e57373;
+  --color-red-40: #ef5350;
+  --color-red-50: #f44336;
+  --color-red-60: #e53935;
+  --color-red-70: #d32f2f;
+  --color-red-80: #c62828;
+  --color-red-90: #b71c1c;
+
+  // orange
+  --color-orange-05: #fff3e0;
+  --color-orange-10: #ffe0b2;
+  --color-orange-20: #ffcc80;
+  --color-orange-30: #ffb74d;
+  --color-orange-40: #ffa726;
+  --color-orange-50: #ff9800;
+  --color-orange-60: #fb8c00;
+  --color-orange-70: #f57c00;
+  --color-orange-80: #ef6c00;
+  --color-orange-90: #e65100;
+  // yellow
+  --color-yellow-05: #fffde7;
+  --color-yellow-10: #fff9c4;
+  --color-yellow-20: #fff59d;
+  --color-yellow-30: #fff176;
+  --color-yellow-40: #ffee58;
+  --color-yellow-50: #ffeb3b;
+  --color-yellow-60: #fdd835;
+  --color-yellow-70: #fbc02d;
+  --color-yellow-80: #f9a825;
+  --color-yellow-90: #f57f17;
+  //evernote-green
+  --dark-green: #0e753d;
+  --evernote-green-light: #26b54c;
+  --evernote-green: #00a82d;
+  --evernote-green-dark: #008f26;
+  --evernote-green-darker: #007620;
+  --med-green: #b2e4c1;
+  --dark-fun-green: #007620;
+  --darker-green: #2e3e34;
+  --slightly-dark-green: #658873;
+  --normal-green: #e9fdf1;
+  //evernote-gray
+  --white: #fff;
+  --lighter-alabaster: #fafafa;
+  --gray97: #f8f8f8;
+  --gray95: #f2f2f2;
+  --gallery: #ededed;
+  --gray90: #e6e6e6;
+  --mischka: #dadde3;
+  --gray85: #d9d9d9;
+  --gainsboro: #ddd;
+  --silver: #c3c3c3;
+  --gray80: #ccc;
+  --bombay: #b5b8be;
+  --gray-chateau: #9ea8b1;
+  --grey30alpha: #b3b3b3;
+  --dark-gray: #afafaf;
+  --nobel: #b4b4b4;
+  --grey40alpha: #999;
+  --true-grey: #888;
+  --light-slate-grey: #858f97;
+  --gray65: #a6a6a6;
+  --gray: #7a8083;
+  --boulder: #777;
+  --gray40: #666;
+  --gray45: #737373;
+  --nevada: #5b6b70;
+  --black: #000;
+  --gray25: #404040;
+  --gray30: #4d4d4d;
+  --mine-shaft: #313131;
+  --gray20: #333;
+  --gray15: #262626;
+  --night-rider: #323232;
+  --whisper: #e7e7e7;
+  --zambezi: #5f5f5f;
+  --gray71: #b5b5b5;
+  --gray10: #1a1a1a;
+  --black-transparent: rgba(0, 0, 0, 0.14902);
+  --white-transparent: hsla(0, 0%, 100%, 0);
+
+  // turquoise
+  --color-turquoise-30: #197367;
+  --color-turquoise-40: #2ac1ae;
+  --color-turquoise-50: #66decf;
+  --color-turquoise-50-rgb: #{hextorgb(#66decf)};
+  --color-turquoise-60: #c8f1ec;
+  --color-turquoise-60-rgb: #{hextorgb(#c8f1ec)};
+  --color-turquoise-70: #e6f9f7;
+  --color-turquoise-80: #f0fcfb;
+  // cyan
+  --color-cyan-30: #387982;
+  --color-cyan-40: #59c1cf;
+  --color-cyan-50: #6deeff;
+  --color-cyan-50-rgb: #{hextorgb(#6deeff)};
+  --color-cyan-60: #b5f6ff;
+  --color-cyan-70: #d4faff;
+  --color-cyan-80: #e3fcff;
+  // green
+  --color-green-05: #e8f5e9;
+  --color-green-10: #b2dfdb;
+  --color-green-20: #a5d6a7;
+  --color-green-30: #81c784;
+  --color-green-40: #66bb6a;
+  --color-green-50: #4caf50;
+  --color-green-60: #43a047;
+  --color-green-70: #388e3c;
+  --color-green-80: #2e7d32;
+  --color-green-90: #1b5e20;
+  // blue
+  --color-blue-05: #e3f2fd;
+  --color-blue-10: #bbdefb;
+  --color-blue-20: #90caf9;
+  --color-blue-30: #64b5f6;
+  --color-blue-40: #42a5f5;
+  --color-blue-50: #2196f3;
+  --color-blue-60: #1e88e5;
+  --color-blue-70: #1976d2;
+  --color-blue-80: #1565c0;
+  --color-blue-90: #0d47a1;
+  // purple
+  --color-purple-05: #f3e5f5;
+  --color-purple-10: #e1bee7;
+  --color-purple-20: #ce93d8;
+  --color-purple-30: #ba68c8;
+  --color-purple-40: #ab47bc;
+  --color-purple-50: #9c27b0;
+  --color-purple-60: #8e24aa;
+  --color-purple-70: #7b1fa2;
+  --color-purple-80: #6a1b9a;
+  --color-purple-90: #4a148c;
+  // cobalt
+  --color-cobalt-30: #181d85;
+  --color-cobalt-40: #181d85;
+  --color-cobalt-50: #2f37ff;
+  --color-cobalt-50-rgb: #{hextorgb(#2f37ff)};
+  --color-cobalt-60: #bcd1f5;
+  --color-cobalt-70: #d7e4f9;
+  --color-cobalt-80: #edf3fc;
+  // pink
+  --color-pink-30: #8c306d;
+  --color-pink-40: #ff57c5;
+  --color-pink-50: #ff93da;
+  --color-pink-50-rgb: #{hextorgb(#ff93da)};
+  --color-pink-60: #ffd5f1;
+  --color-pink-70: #fee9f8;
+  --color-pink-80: #fff5fc;
+  // amaranth
+  --color-amaranth-30: #801b2d;
+  --color-amaranth-40: #bf2843;
+  --color-amaranth-50: #ff5271;
+  --color-amaranth-50-rgb: #{hextorgb(#ff5271)};
+  --color-amaranth-60: #ffb5c2;
+  --color-amaranth-70: #ffd1d9;
+  --color-amaranth-80: #ffe8ec;
+
+  // elements
+  --color-black-main: #172b4d;
+  --color-white-main: #ffffff;
+  --color-red-main: var(--color-red-50);
+  --color-red-bgc-main: var(--color-red-10);
+  --color-green-main: var(--color-green-50);
+  --color-yellow-main: var(--color-yellow-50);
+  --color-orange-main: var(--color-orange-40);
+  --color-blue-main: var(--color-blue-70);
+  --color-purple-main: var(--color-purple-20);
+  --color-gray-main: var(--color-gray-blue-60);
+  --color-gray-bgc-main: var(--color-gray-blue-05);
+
+  --dynamic-background-color: hsl(206, 13.7%, 10%);
+  --dynamic-icon-color: #ffffff;
+  --dynamic-text-color: #ffffff;
+  --dynamic-text-color-transparent: hsla(0, 0%, 100%, 0.16);
+  --dynamic-background-color-transparent: hsla(206, 13.7%, 10%, 0.9);
+
+  --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+// @each $name, $color in $colors {
+//   &_color-#{$name} {
+//     @include color($color);
+//     @include hover($color);
+//   }
+// }

@@ -5,8 +5,8 @@
   import settingsSvg from '@/assets/icons/settings.svg?raw'
   import todoSvg from '@/assets/icons/todo.svg?raw'
   import constructorSvg from '@/assets/icons/constructor.svg?raw'
-  import arrowDownSvg from '@/assets/icons/arrow_down.svg?raw'
-  import plusSvg from '@/assets/icons/plus.svg?raw'
+  import arrowDownSvg from '@/assets/icons/16/arrow_down.svg?raw'
+  import plusSvg from '@/assets/icons/plus_24.svg?raw'
 
   const iconFunc = (name: string): any => {
     switch (name) {
@@ -69,22 +69,15 @@
         </div>
         <div :class="[$style['menu__info_item'], $style['menu__create']]">
           <div :class="$style['menu__create-button']">
-            <div :class="$style['menu__create-left']">
-              <div
-                :class="[
-                  $style['menu__create-icon'],
-                  $style['menu__create-plus'],
-                ]"
-                v-html="plusSvg"
-              ></div>
-              <div>Создать</div>
-            </div>
-            <div :class="$style['menu__create-right']">
-              <div
-                :class="[$style['menu__create-icon'], ['menu__create-arrow']]"
-                v-html="arrowDownSvg"
-              ></div>
-            </div>
+            <nb-button text="Создать" color="green" size="small">
+              <template #before-text>
+                <nb-icon
+                  class="n-mr-8"
+                  :class="$style['menu__create-icon']"
+                  name="plus"
+                />
+              </template>
+            </nb-button>
           </div>
         </div>
       </div>
@@ -155,10 +148,10 @@
       }
 
       &__create {
-        background-color: var(--evernote-green);
-        border-radius: 20px;
-        padding-left: 12px;
-        padding-right: 12px;
+        // background-color: var(--evernote-green);
+        // border-radius: 20px;
+        // padding-left: 12px;
+        // padding-right: 12px;
 
         &-button {
           display: flex;
@@ -175,6 +168,7 @@
 
         &-icon {
           fill: var(--color-white);
+          stroke: var(--color-white);
         }
       }
 

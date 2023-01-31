@@ -1,11 +1,11 @@
 <script lang="ts" setup>
   import WidgetBlock from './main/WidgetBlock.vue'
   import { computed } from 'vue'
-  import { useStore } from 'vuex'
+  import { useTestStore } from '@/pinia/test'
 
-  const store = useStore()
-  store.dispatch('module/loaditems')
-  const data = computed(() => store.state.module.items)
+  const store = useTestStore()
+  store.loaditems()
+  const data = computed(() => store.items)
 </script>
 <template>
   <div class="n-flex n-wp-100 n-hp-100" :class="$style['main']">

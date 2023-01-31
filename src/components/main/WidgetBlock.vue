@@ -34,13 +34,13 @@
     background-color: var(--white);
     border-radius: 8px;
     -webkit-box-shadow: 1px 2px 6px var(--black-transparent);
-    box-shadow: 1px 2px 6pxvar (--black-transparent);
+    box-shadow: 1px 2px 6px var(--black-transparent);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
-    // padding: 16px;
+    max-height: 400px;
     overflow: hidden;
 
     &__title {
