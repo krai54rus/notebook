@@ -21,9 +21,7 @@
         <h3>{{ title }}</h3>
       </slot>
     </div>
-    <div>
-      <slot name="content"></slot>
-    </div>
+    <slot name="content"></slot>
     <div v-if="false" :class="$style['tabs']">
       <div :class="$style['tabs__list']">
         <div :class="$style['tabs__item']">

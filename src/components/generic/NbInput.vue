@@ -2,6 +2,7 @@
   import { ref } from 'vue'
 
   type TInputType = 'regular' | 'outlined' | 'solo' | 'filled'
+  type TInputSize = 'small' | 'normal'
 
   interface Props {
     value?: string
@@ -9,6 +10,8 @@
     type?: TInputType
     color?: string
     placeholder?: string
+    size?: TInputSize
+    noFocus?: boolean
     resize?: boolean
   }
 
@@ -18,6 +21,8 @@
     type: 'solo',
     color: 'blue',
     placeholder: '',
+    size: 'normal',
+    noFocus: false,
     resize: false,
   })
 
@@ -31,6 +36,15 @@
   const handleChange = (params: any) => {
     emit('change', params)
   }
+
+  const handlerFocus = () => {
+    console.log('props.noFocus ', props.noFocus)
+    if (props.noFocus) {
+      return
+    }
+
+    isFocused.value = true
+  }
 </script>
 <template>
   <div
@@ -39,7 +53,7 @@
       [$style[`input_${type}`]]: true,
       [$style['input_focused']]: isFocused,
     }"
-    class="n-flex n-flex-column"
+    class="n-wp-100 n-flex n-flex-column"
   >
     <label
       v-if="label"
@@ -53,17 +67,18 @@
     >
     <input
       ref="inputRef"
-      class="n-wp-100 n-px-8 = n-pb-8"
+      class="n-wp-100 n-px-8 n-pb-8"
       :class="{
         [$style['input__el']]: true,
-        [$style[`input_${type}_focused`]]: true,
+        [$style[`input_${type}_focused`]]: isFocused,
+        [$style[`input_${size}`]]: true,
         'n-pt-8': !label,
         'n-pt-16': label,
       }"
       id="inp"
       :value="value"
       :placeholder="!label ? placeholder : ''"
-      @focus="isFocused = true"
+      @focus="handlerFocus()"
       @blur="isFocused = false"
       @input="handleInput($event)"
       @change="handleChange($event)"
@@ -90,7 +105,6 @@
     &__el {
       font-size: var(--size-16);
       border-radius: var(--radius-sm);
-      height: 56px;
     }
 
     &__label {
@@ -102,6 +116,14 @@
         top: 5px;
         font-size: var(--size-12);
       }
+    }
+
+    &_normal {
+      height: 56px;
+    }
+
+    &_small {
+      height: 46px;
     }
 
     &_filled {
