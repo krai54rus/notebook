@@ -6,6 +6,7 @@ import Notes from '@/components/Notes.vue'
 import Test from '@/components/Test.vue'
 import TestColor from '@/components/TestColor.vue'
 import TestMain from '@/components/TestMain.vue'
+import TestFunc from '@/components/TestFunc.vue'
 import Components from '@/components/Components.vue'
 import TodoTablePage from '@/components/todo/TodoTablePage.vue'
 
@@ -34,6 +35,11 @@ const routes = [
     path: '/notes',
     name: 'Notes',
     component: Notes,
+  },
+  {
+    path: '/testfunc',
+    name: 'TestFunc',
+    component: TestFunc,
   },
   {
     path: '/test',
