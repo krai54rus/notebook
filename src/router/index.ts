@@ -5,6 +5,7 @@ import ToDo from '@/components/ToDo.vue'
 import Notes from '@/components/Notes.vue'
 import Test from '@/components/Test.vue'
 import TestColor from '@/components/TestColor.vue'
+import TestYaMap from '@/components/TestYaMap.vue'
 import TestMain from '@/components/TestMain.vue'
 import TestFunc from '@/components/TestFunc.vue'
 import Components from '@/components/Components.vue'
@@ -20,6 +21,11 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About,
+  },
+  {
+    path: '/testmap',
+    name: 'testmap',
+    component: TestYaMap,
   },
   {
     path: '/testcolor',
