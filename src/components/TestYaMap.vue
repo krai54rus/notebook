@@ -17,8 +17,8 @@
   //   },
   // })
 
-  let myMap = reactive({})
-  let mark = reactive({})
+  let myMap = reactive<any>({})
+  let mark = reactive<any>({})
 
   let coords = reactive([59.910173, 30.285394])
 
@@ -35,21 +35,19 @@
   }))
 
   const createMap = async () => {
-    ymaps.ready(() => {
-      // инициализация карты в указанном элементе
-      myMap = new ymaps.Map('map', options)
-
-      mark = new ymaps.Placemark(
-        myMap.getCenter(),
-        {
-          // hintContent: 'текст для хинта',
-          // balloonContent: 'текст при клике',
-        },
-        iconSetup.value
-      )
-
-      myMap.geoObjects.add(mark)
-    })
+    // ymaps.ready(() => {
+    //   // инициализация карты в указанном элементе
+    //   myMap = new ymaps.Map('map', options)
+    //   mark = new ymaps.Placemark(
+    //     myMap.getCenter(),
+    //     {
+    //       // hintContent: 'текст для хинта',
+    //       // balloonContent: 'текст при клике',
+    //     },
+    //     iconSetup.value
+    //   )
+    //   myMap.geoObjects.add(mark)
+    // })
   }
 
   const loadScript = () => {

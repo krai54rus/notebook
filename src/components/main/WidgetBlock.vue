@@ -1,5 +1,7 @@
 <script setup lang="ts">
   import WidgetItem from './WidgetItem.vue'
+  import { ITest } from '@/entities/test/TestTypes'
+  // import { ITest } from './test'
   defineProps<{
     title?: string
     items?: any[]

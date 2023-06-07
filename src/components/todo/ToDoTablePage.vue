@@ -3,6 +3,7 @@
   import { ref, computed, onMounted, nextTick } from 'vue'
   import TodoTableColumn from './TodoTableColumn.vue'
   import TodoTableColumnItem from './TodoTableColumnItem.vue'
+  import NbDnDItem from '@/components/generic/NbDnDItem.vue'
   import ModalTodoItem from './ModalTodoItem.vue'
   import plusSvg from '@/assets/icons/plus.svg?raw'
   import { ITodoItem } from '@/entities/todo/TodoColumnTypes'
@@ -409,7 +410,7 @@
         @save-item="saveItem($event)"
       >
         <template #content>
-          <TodoTableColumnItem
+          <NbDnDItem
             v-for="(item, itemI) in column.items"
             :key="item.id"
             :item="item"
@@ -418,8 +419,10 @@
             @drag-start="dragStart($event)"
             @click="clickItemUp($event)"
           >
-            {{ item.id }}
-          </TodoTableColumnItem>
+            <TodoTableColumnItem :item="item">
+              {{ item.id }}
+            </TodoTableColumnItem>
+          </NbDnDItem>
         </template>
       </TodoTableColumn>
     </div>
