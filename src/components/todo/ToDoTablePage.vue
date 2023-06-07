@@ -4,7 +4,6 @@
   import TodoTableColumn from './TodoTableColumn.vue'
   import TodoTableColumnItem from './TodoTableColumnItem.vue'
   import ModalTodoItem from './ModalTodoItem.vue'
-  import plusSvg from '@/assets/icons/plus.svg?raw'
   import { ITodoItem } from '@/entities/todo/TodoColumnTypes'
 
   interface ITodoDragItem {

@@ -1,6 +1,4 @@
 import { defineStore } from 'pinia'
-import { v4 as uuidv4 } from 'uuid'
-import * as faker from 'faker'
 import api, { errorHandler } from '@/api'
 
 interface Item {
@@ -14,10 +12,10 @@ interface Item {
 
 function generateFakeData(): Item {
   return {
-    id: uuidv4(),
+    id: 'qwe',
     quantity: Math.random(),
-    name: faker.lorem.word(),
-    description: faker.lorem.words(),
+    name: 'test',
+    description: 'descr',
     createdAt: new Date(),
   }
 }
