@@ -1,10 +1,6 @@
 <script setup lang="ts">
   import { computed } from 'vue'
-  import { useStore } from 'vuex'
-
-  const store = useStore()
-  store.dispatch('module/loaditems')
-  const data = computed(() => store.state.module.items)
+  const data = computed(() => [])
 </script>
 
 <template>
@@ -14,7 +10,7 @@
     :class="$style['data-list']"
   >
     <div class="data-item" v-for="item in data">
-      <span>{{ item.id }}</span>
+      <span>{{ item }}</span>
     </div>
   </div>
 </template>
