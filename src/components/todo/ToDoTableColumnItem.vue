@@ -19,7 +19,7 @@
 </script>
 
 <template>
-  <div class="n-p-4 n-mb-8 n-flex n-justify-space-between n-radius--full-sm">
+  <div class="n-p-4 n-flex n-justify-space-between n-radius--full-sm">
     <div v-if="!isEdit" class="n-flex">
       <div>
         {{ item.placeholder ? '' : item.title }}

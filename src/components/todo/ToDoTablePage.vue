@@ -1,8 +1,8 @@
 <script lang="ts" setup>
   import { useToDoStore } from '@/pinia/todo'
   import { ref, computed, onMounted, nextTick } from 'vue'
-  import TodoTableColumn from './TodoTableColumn.vue'
-  import TodoTableColumnItem from './TodoTableColumnItem.vue'
+  import TodoTableColumn from './ToDoTableColumn.vue'
+  import TodoTableColumnItem from './ToDoTableColumnItem.vue'
   import NbDnDItem from '@/components/generic/NbDnDItem.vue'
   import ModalTodoItem from './ModalTodoItem.vue'
   import { ITodoItem } from '@/entities/todo/TodoColumnTypes'
@@ -411,6 +411,7 @@
         <template #content>
           <NbDnDItem
             v-for="(item, itemI) in column.items"
+            class="n-mb-8"
             :key="item.id"
             :item="item"
             :index="itemI"
@@ -418,7 +419,7 @@
             @drag-start="dragStart($event)"
             @click="clickItemUp($event)"
           >
-            <TodoTableColumnItem :item="item">
+            <TodoTableColumnItem tem :item="item">
               {{ item.id }}
             </TodoTableColumnItem>
           </NbDnDItem>

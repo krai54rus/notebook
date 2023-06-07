@@ -1,14 +1,35 @@
 {
-  "files": [],
-  "references": [
+  "compilerOptions": {
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom", "DOM.Iterable"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": [
+    "./plugins/**/*",
+    "./typings/**/*",
+    "./built/**/*", // This is what fixed it!
+    "./node_modules/**/*",
+    "dist"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "plugins": [
     {
-      "path": "./tsconfig.node.json"
+      "name": "typescript-eslint-language-service"
     },
     {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.vitest.json"
+      "name": "typescript-vue-plugin"
     }
   ]
 }
