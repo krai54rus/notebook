@@ -1,11 +1,12 @@
 <script lang="ts" setup>
   import ToDoTableItem from './todo/ToDoTableItem.vue'
   import { computed } from 'vue'
-  import { useStore } from 'vuex'
+  import { useTodoPageStore } from '@/pinia/todopage'
 
-  const store = useStore()
-  store.dispatch('module/loaditems')
-  const data = computed(() => store.state.module.items)
+  const store = useTodoPageStore()
+
+  const data = computed(() => store.items)
+  store.loaditems()
 </script>
 <template>
   <div class="n-wp-100 n-hp-100" :class="$style['todo']">
