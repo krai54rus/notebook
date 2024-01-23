@@ -4,7 +4,7 @@
 </script>
 
 <template>
-  <div class="root">
+  <div class="root qwe1">
     <Sidebar />
     <Content />
   </div>
