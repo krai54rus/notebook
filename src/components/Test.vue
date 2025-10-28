@@ -2,6 +2,19 @@
   import WidgetBlock from './main/WidgetBlock.vue'
   import { ref, computed, onMounted } from 'vue'
   import { useTestStore } from '@/pinia/test'
+  import api from '@/api'
+
+  // onMounted(async () => {
+  //   const res: any = await api(
+  //     'https://jsonplaceholder.typicode.com/users',
+  //     'GET'
+  //   )
+  //   if (res && res.data) {
+  //     items.value = res.data
+  //   }
+
+  //   console.log(res)
+  // })
 
   // const store = useTestStore()
   // store.loaditems('module/loaditems')
@@ -42,6 +55,26 @@
       }
     },
   }
+
+  const handleApi = async () => {
+    // const res = await api('https://jsonplaceholder.typicode.com/users', 'GET')
+    const apiUrl = 'https://api.stalcraft.net/auction/prices'
+
+    // Параметры запроса
+    const params = {
+      region: 'RU', // Регион (например, RU, EU и т.д.)
+      itemId: '12345', // ID предмета, который тебя интересует
+    }
+
+    // Формируем URL с параметрами
+    const url = `${apiUrl}?region=${params.region}&itemId=${params.itemId}`
+    const res = await api(url, 'GET')
+    console.log('res ', res)
+  }
+
+  const startDrag = (e: Event) => {
+    console.log(e)
+  }
 </script>
 <template>
   <div class="n-flex n-wp-100 n-hp-100" :class="$style['test']">
@@ -49,6 +82,21 @@
       class="n-wp-100 n-p-16 n-flex n-justify-center"
       :class="$style['test-wrapper']"
     >
+      <div
+        draggable
+        @dragstart="startDrag($event)"
+        style="width: 200px; height: 200px; background-color: aqua"
+      >
+        test
+      </div>
+      <div>
+        <nb-button
+          color="green"
+          size="small"
+          text="TEST API"
+          @click="handleApi()"
+        ></nb-button>
+      </div>
       <div>
         <div
           class="n-p-32"
@@ -85,7 +133,7 @@
     overflow: hidden;
 
     &_xl {
-      background-color: red;
+      background-color: rgb(139, 22, 22);
     }
 
     &_lg {

@@ -49,9 +49,11 @@
     <div :class="$style['button__before-text']">
       <slot name="before-text"></slot>
     </div>
-    <div class="n-flex" :class="$style['button__text']">
-      <span>{{ text }}</span>
-    </div>
+    <slot>
+      <div class="n-flex" :class="$style['button__text']">
+        <span>{{ text }}</span>
+      </div>
+    </slot>
     <div :class="$style['button__after-text']">
       <slot name="after-text"></slot>
     </div>
@@ -63,7 +65,11 @@
   $component: button;
 
   @mixin color($color, $color-text: 0) {
-    &:not(.#{$component}_disabled, .#{$component}_outline, .#{$component}_plain) {
+    &:not(
+        .#{$component}_disabled,
+        .#{$component}_outline,
+        .#{$component}_plain
+      ) {
       color: $color-white-main;
       fill: $color-white-main;
       @if $color-text != 0 {
@@ -92,7 +98,11 @@
   @mixin hover($color, $color-text: 0) {
     $hovered-color-darken: darken($color, 10%);
     $hovered-color-lighten: lighten($color, 25%);
-    &:not(.#{$component}_disabled, .#{$component}_outline, .#{$component}_plain):hover {
+    &:not(
+        .#{$component}_disabled,
+        .#{$component}_outline,
+        .#{$component}_plain
+      ):hover {
       @if $color-text != 0 {
         color: $color-text;
         fill: $color-text;

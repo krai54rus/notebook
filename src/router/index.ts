@@ -4,6 +4,7 @@ import About from '@/components/About.vue'
 import ToDo from '@/components/ToDo.vue'
 import Notes from '@/components/Notes.vue'
 import Test from '@/components/Test.vue'
+import TestTest from '@/components/TestTest.vue'
 import TestColor from '@/components/TestColor.vue'
 import TestYaMap from '@/components/TestYaMap.vue'
 import TestMain from '@/components/TestMain.vue'
@@ -51,6 +52,11 @@ const routes = [
     path: '/test',
     name: 'Test',
     component: Test,
+  },
+  {
+    path: '/testtest',
+    name: 'TestTest',
+    component: TestTest,
   },
   {
     path: '/testmain',

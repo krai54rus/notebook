@@ -52,6 +52,11 @@
       path: 'settings',
       icon: 'settings',
     },
+    {
+      title: 'Тестовая страница',
+      path: 'test',
+      icon: 'test',
+    },
   ]
 </script>
 
