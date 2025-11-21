@@ -61,7 +61,7 @@
 </template>
 
 <style lang="scss" module>
-  @import '@/scss/variables/colorsVars';
+  @import '@/assets/scss/variables/colorsVars';
   $component: button;
 
   @mixin color($color, $color-text: 0) {

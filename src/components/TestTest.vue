@@ -21,8 +21,8 @@
     div.style.height = '100px'
     div.style.position = 'absolute'
     div.style.backgroundColor = 'red'
-    div.style.left = `${e.clientX * 2}px`
-    div.style.top = `${e.clientY * 2}px`
+    div.style.left = `${e.clientX}px`
+    div.style.top = `${e.clientY}px`
 
     //@ts-ignore
     container?.value.appendChild(div)

@@ -10,7 +10,8 @@ import TestYaMap from '@/components/TestYaMap.vue'
 import TestMain from '@/components/TestMain.vue'
 import TestFunc from '@/components/TestFunc.vue'
 import Components from '@/components/Components.vue'
-import TodoTablePage from '@/components/todo/TodoTablePage.vue'
+import TodoTablePage from '@/components/todo/ToDoTablePage.vue'
+import TodoBoard from '@/components/test/TodoBoard.vue'
 
 const routes = [
   {
@@ -57,6 +58,11 @@ const routes = [
     path: '/testtest',
     name: 'TestTest',
     component: TestTest,
+  },
+  {
+    path: '/testdnd',
+    name: 'TestDnD',
+    component: TodoBoard,
   },
   {
     path: '/testmain',

@@ -1,5 +1,5 @@
 export interface ITodoItem {
-  id: string
+  id: string | number
   title: string
   description: string
   placeholder?: boolean
