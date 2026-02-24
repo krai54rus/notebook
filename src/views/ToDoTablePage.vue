@@ -1,10 +1,10 @@
 <script lang="ts" setup>
   import { useToDoStore } from '@/pinia/todo'
   import { ref, computed, onMounted, nextTick } from 'vue'
-  import TodoTableColumn from './ToDoTableColumn.vue'
-  import TodoTableColumnItem from './ToDoTableColumnItem.vue'
+  import TodoTableColumn from '@/components/todo/ToDoTableColumn.vue'
+  import TodoTableColumnItem from '@/components/todo/ToDoTableColumnItem.vue'
   import NbDnDItem from '@/components/generic/NbDnDItem.vue'
-  import ModalTodoItem from './ModalTodoItem.vue'
+  import ModalTodoItem from '@/components/todo/ModalTodoItem.vue'
   import { ITodoItem } from '@/entities/todo/TodoColumnTypes'
 
   interface ITodoDragItem {

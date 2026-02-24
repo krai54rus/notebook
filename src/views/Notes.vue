@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import NoteItem from './note/NoteItem.vue'
+  import NoteItem from '@/components/note/NoteItem.vue'
   import { ref, computed, Ref } from 'vue'
   import { useNoteStore } from '@/pinia/notes'
   import { INoteItem } from '@/entities/notes/NoteTypes'
@@ -23,12 +23,12 @@
         <template #content>
           <div class="n-flex n-flex-center n-wp-100">
             <nb-input
+              v-model="newNote"
               :class="$style['notes__input']"
               placeholder="Заметка..."
               type="solo"
               size="small"
               :no-focus="true"
-              :value="newNote"
             ></nb-input>
           </div>
         </template>

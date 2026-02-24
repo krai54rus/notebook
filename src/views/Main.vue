@@ -1,10 +1,17 @@
 <script lang="ts" setup>
-  import WidgetBlock from './main/WidgetBlock.vue'
+  import WidgetBlock from '@/components/main/WidgetBlock.vue'
   import { computed } from 'vue'
   import { useTestStore } from '@/pinia/test'
 
   const store = useTestStore()
   store.loaditems()
+  const func = () => setTimeout(() => console.log('re'), 3000)
+  func()
+
+  const func1 = () => {
+    for (let index = 0; index < 1000000000; index++) {}
+  }
+  func1()
   const data = computed(() => store.items)
 </script>
 <template>

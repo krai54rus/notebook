@@ -1,23 +1,30 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import Main from '@/components/Main.vue'
-import About from '@/components/About.vue'
-import ToDo from '@/components/ToDo.vue'
-import Notes from '@/components/Notes.vue'
-import Test from '@/components/Test.vue'
-import TestTest from '@/components/TestTest.vue'
-import TestColor from '@/components/TestColor.vue'
-import TestYaMap from '@/components/TestYaMap.vue'
-import TestMain from '@/components/TestMain.vue'
-import TestFunc from '@/components/TestFunc.vue'
-import Components from '@/components/Components.vue'
-import TodoTablePage from '@/components/todo/ToDoTablePage.vue'
-import TodoBoard from '@/components/test/TodoBoard.vue'
+import Main from '@/views/Main.vue'
+import About from '@/views/About.vue'
+import ToDo from '@/views/ToDo.vue'
+import Notes from '@/views/Notes.vue'
+import Test from '@/views/Test.vue'
+import TestTest from '@/views/TestTest.vue'
+import TestColor from '@/views/TestColor.vue'
+import TestYaMap from '@/views/TestYaMap.vue'
+import TestMain from '@/views/TestMain.vue'
+import TestFunc from '@/views/TestFunc.vue'
+import Components from '@/views/Components.vue'
+import TodoTablePage from '@/views/ToDoTablePage.vue'
+import TodoBoard from '@/views/TodoBoard.vue'
+import Sobes from '@/views/Sobes.vue'
+import RefactorPage from '@/views/RefactorPage.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Main',
     component: Main,
+  },
+  {
+    path: '/refactor',
+    name: 'Refactor',
+    component: RefactorPage,
   },
   {
     path: '/about',
@@ -42,12 +49,17 @@ const routes = [
   {
     path: '/notes',
     name: 'Notes',
-    component: Notes,
+    component: () => import('@/views/Notes.vue'),
   },
   {
     path: '/testfunc',
     name: 'TestFunc',
     component: TestFunc,
+  },
+  {
+    path: '/sobes',
+    name: 'Sobes',
+    component: Sobes,
   },
   {
     path: '/test',
@@ -62,7 +74,7 @@ const routes = [
   {
     path: '/testdnd',
     name: 'TestDnD',
-    component: TodoBoard,
+    component: () => import('@/views/TodoBoard.vue'),
   },
   {
     path: '/testmain',
@@ -70,7 +82,7 @@ const routes = [
     component: TestMain,
   },
   {
-    path: '/components',
+    path: '/views',
     name: 'Components',
     component: Components,
   },

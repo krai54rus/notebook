@@ -10,16 +10,20 @@
   <div class="n-flex n-wp-100 n-hp-100" :class="$style['components']">
     <div class="n-wp-100 n-p-32 n-flex" :class="$style['components-wrapper']">
       <div class="n-w-100 n-mr-12">
-        <nb-input value="test test" type="regular" label="label"></nb-input>
+        <nb-input
+          model-value="test test"
+          type="regular"
+          label="label"
+        ></nb-input>
       </div>
       <div class="n-w-100 n-mr-12">
-        <nb-input value="test" type="solo"></nb-input>
+        <nb-input model-value="test" type="solo"></nb-input>
       </div>
       <div class="n-w-100 n-mr-12">
-        <nb-input value="test" type="filled"></nb-input>
+        <nb-input model-value="test" type="filled"></nb-input>
       </div>
       <div class="n-w-100 n-mr-12">
-        <nb-input value="test" type="outlined"></nb-input>
+        <nb-input model-value="test" type="outlined"></nb-input>
       </div>
     </div>
   </div>

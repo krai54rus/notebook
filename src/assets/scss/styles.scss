@@ -1,8 +1,7 @@
-@import 'variables';
-@import 'fonts';
-@import 'variables/colorsVars';
-@import 'variables/common';
-@import 'variables/colorsMain';
+@use 'fonts';
+@use 'variables/colorsVars';
+@use 'variables/common';
+@use 'variables/colorsMain';
 
 * {
   box-sizing: border-box;

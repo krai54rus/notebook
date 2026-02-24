@@ -53,28 +53,25 @@
   ) => {
     console.log('drag start', itemId, areaId, item)
     if (target) {
-      target.style.backgroundColor = 'red'
+      // Visually hide the dragged element without changing the data,
+      // so the native drag-and-drop stays intact.
+      target.style.opacity = '0'
+      target.style.height = '0px'
     }
-    // const targetListIndex = todoLists.value.findIndex(
-    //   list => list.id === areaId
-    // )
-    // if (targetListIndex !== -1) {
-    //   const currentItemIndex = todoLists.value[targetListIndex].items.findIndex(
-    //     i => i.id === itemId
-    //   )
-    //   if (currentItemIndex !== -1) {
-    //     todoLists.value[targetListIndex].items.splice(currentItemIndex, 1)
-    //   }
-    // }
   }
 
   const handleDragEnd = () => {
     console.log('drag end')
+    // Nothing to do in the store; item visibility is restored
+    // by the browser once the drag operation finishes.
   }
 </script>
 
 <template>
   <div class="todo-board">
+    <div class="fixed">test fixed</div>
+    <div class="abolute">test absolute</div>
+    <button class="btn">Нажми меня</button>
     <DragNDropArea
       v-for="list in todoLists"
       :key="list.id"
@@ -88,7 +85,32 @@
     />
   </div>
 </template>
+<style>
+  .btn {
+    width: 200px;
+    height: 50px;
+    background: linear-gradient(to right, #4caf50, #8bc34a);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    /* Создаем слой заранее для анимации */
+    /* will-change: transform, box-shadow; */
+  }
 
+  .btn:hover {
+    /* ХОРОШО: transform и opacity - Composite only */
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+    /* ПЛОХО: если бы мы использовали:
+       width: 210px;      → Layout + Paint + Composite
+       height: 55px;      → Layout + Paint + Composite
+       margin-top: -2px;  → Layout + Paint + Composite
+    */
+  }
+</style>
 <style lang="scss" scoped>
   .todo-board {
     display: flex;
@@ -97,6 +119,18 @@
     min-height: 400px;
     background: $gray-100;
     border-radius: $border-radius-lg;
+  }
+
+  .fixed {
+    right: 150px;
+    top: 150px;
+    position: fixed;
+  }
+
+  .abolute {
+    position: absolute;
+    right: 100px;
+    top: 100px;
   }
 
   .todo-list {

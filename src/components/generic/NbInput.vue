@@ -5,7 +5,7 @@
   type TInputSize = 'small' | 'normal'
 
   interface Props {
-    value?: string
+    modelValue?: string
     label?: string
     type?: TInputType
     color?: string
@@ -16,7 +16,7 @@
   }
 
   const props = withDefaults(defineProps<Props>(), {
-    value: '',
+    modelValue: '',
     label: '',
     type: 'solo',
     color: 'blue',
@@ -26,23 +26,25 @@
     resize: false,
   })
 
-  const emit = defineEmits(['input', 'change'])
-  const inputRef = ref('inputRef')
+  const emit = defineEmits<{
+    'update:modelValue': [value: string]
+    change: [event: Event]
+  }>()
+
+  const inputRef = ref<HTMLInputElement | null>(null)
   const isFocused = ref(false)
-  const handleInput = (params: any) => {
-    emit('input', params)
+
+  function onInput(e: Event) {
+    const target = e.target as HTMLInputElement
+    emit('update:modelValue', target.value)
   }
 
-  const handleChange = (params: any) => {
-    emit('change', params)
+  function onChange(e: Event) {
+    emit('change', e)
   }
 
-  const handlerFocus = () => {
-    console.log('props.noFocus ', props.noFocus)
-    if (props.noFocus) {
-      return
-    }
-
+  function onFocus() {
+    if (props.noFocus) return
     isFocused.value = true
   }
 </script>
@@ -51,6 +53,7 @@
     :class="{
       [$style['input']]: true,
       [$style[`input_${type}`]]: true,
+      [$style[`input_${size}`]]: true,
       [$style['input_focused']]: isFocused,
     }"
     class="n-wp-100 n-flex n-flex-column"
@@ -61,7 +64,7 @@
       class="n-pl-8"
       :class="{
         [$style['input__label']]: true,
-        [$style['input__label-top']]: isFocused || value !== '',
+        [$style['input__label-top']]: isFocused || modelValue !== '',
       }"
       >{{ label }}</label
     >
@@ -76,12 +79,12 @@
         'n-pt-16': label,
       }"
       id="inp"
-      :value="value"
+      :value="modelValue"
       :placeholder="!label ? placeholder : ''"
-      @focus="handlerFocus()"
+      @focus="onFocus"
       @blur="isFocused = false"
-      @input="handleInput($event)"
-      @change="handleChange($event)"
+      @input="onInput"
+      @change="onChange"
     />
   </div>
 </template>

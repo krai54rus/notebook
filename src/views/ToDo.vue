@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import ToDoTableItem from './todo/ToDoTableItem.vue'
+  import ToDoTableItem from '@/components/todo/ToDoTableItem.vue'
   import { computed } from 'vue'
   import { useTodoPageStore } from '@/pinia/todopage'
 
@@ -7,6 +7,9 @@
 
   const data = computed(() => store.items)
   store.loaditems()
+
+  const func = () => setTimeout(() => console.log('re'), 3000)
+  func()
 </script>
 <template>
   <div class="n-wp-100 n-hp-100" :class="$style['todo']">

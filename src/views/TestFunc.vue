@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import TestWrapper from './test/TestWrapper.vue'
+  import TestWrapper from '@/components/test/TestWrapper.vue'
   import { ref, computed, provide, onMounted } from 'vue'
   import { useTestStore } from '@/pinia/test'
   import api from '@/api'

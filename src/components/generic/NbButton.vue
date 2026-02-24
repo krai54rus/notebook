@@ -13,7 +13,7 @@
 
   const props = withDefaults(defineProps<Props>(), {
     text: '',
-    color: 'white',
+    color: 'blue',
     size: 'normal',
     outline: false,
     plain: false,
@@ -33,6 +33,7 @@
 </script>
 <template>
   <div
+    v-bind="$attrs"
     class="n-flex n-justify-center n-align-center n-wp-100"
     :class="{
       [$style['green']]: true,
@@ -61,7 +62,7 @@
 </template>
 
 <style lang="scss" module>
-  @import '@/assets/scss/variables/colorsVars';
+  @use '@/assets/scss/variables/colorsVars' as *;
   $component: button;
 
   @mixin color($color, $color-text: 0) {
@@ -145,6 +146,7 @@
     padding: 0px 12px;
     font-weight: var(--font-weight-semibold);
     transition: 0.5s;
+    max-width: 500px;
 
     &::-moz-focus-inner {
       border: 0;
