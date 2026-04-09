@@ -6,15 +6,17 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore ."
-  },
-  "dependencies": {
-    "pinia": "^3.0.4",
-    "vue": "^3.5.27",
-    "vue-router": "^4.6.4",
+    "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore .",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage"
+  },
+  "dependencies": {
+    "echarts": "^6.0.0",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.27",
+    "vue-echarts": "^8.0.1",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

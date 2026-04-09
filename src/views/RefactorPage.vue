@@ -1,55 +1,51 @@
+<script setup lang="ts">
+  import LaunchStatsBarChart from '@/components/test/LaunchStatsBarChart.vue'
+
+  const res = {
+    responseData: {
+      failedToRun: [
+        { ts: '1775554740', value: 10 },
+        { ts: '1775554800', value: 30 },
+        { ts: '1775554860', value: 40 },
+      ],
+      launches: [
+        { ts: '1775554740', value: 50 },
+        { ts: '1775554800', value: 80 },
+        { ts: '1775554860', value: 100 },
+      ],
+      stats: [
+        { ts: '1775554740', value: 40 },
+        { ts: '1775554800', value: 50 },
+        { ts: '1775554860', value: 60 },
+      ],
+    },
+  }
+</script>
+
 <template>
-  <div>
-    <h2>User profile</h2>
-
-    <div v-if="isUserReady">
-      <p>
-        {{ user.name }}
-        <span v-if="user.age && user.age > 18">(adult)</span>
-        <span v-else>(child)</span>
-      </p>
-
-      <input :value="user.name" @input="handleInput" />
-
-      <button @click="handleSave">Save</button>
-
-      <button @click="handleReload">Reload</button>
-    </div>
-    <div v-else>Loading...</div>
-
-    <div v-if="error">
-      {{ error }}
-    </div>
+  <div :class="$style['refactor']">
+    <h2 :class="$style['refactor__title']">Launches Chart Demo</h2>
+    <LaunchStatsBarChart
+      :failed-to-run="res.responseData.failedToRun"
+      :launches="res.responseData.launches"
+      :stats="res.responseData.stats"
+    />
   </div>
 </template>
 
-<script setup>
-  import { ref, watch, onMounted, computed } from 'vue'
-  import { useUser } from '@/composables/user'
-  const { user, loading, error, userApi } = useUser()
+<style lang="scss" module>
+  $component: refactor;
 
-  const isUserReady = computed(() => user.value && !loading.value)
+  .#{$component} {
+    width: 100%;
+    height: 100%;
+    padding: 24px;
 
-  const handleReload = () => {
-    userApi.getUser()
-  }
-  const handleSave = () => {
-    userApi.saveUser()
-  }
-
-  function handleInput(e) {
-    console.log('hI ', e.target.value)
-    if (e.target.value.length > 20) {
-      // alert('Too long name')
-      console.log('too long name')
+    &__title {
+      margin-bottom: 16px;
+      color: var(--color-black-main);
+      font-size: 20px;
+      font-weight: var(--font-weight-semibold);
     }
   }
-
-  // watch(user, () => {
-  //   console.log('user changed')
-  // })
-
-  onMounted(() => {
-    userApi.getUser()
-  })
-</script>
+</style>
